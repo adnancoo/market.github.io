@@ -155,6 +155,7 @@
             background: var(--white);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             border-top: 1px solid var(--gray);
+            position: relative;
         }
 
         .nav-container {
@@ -1096,6 +1097,7 @@
                 padding: 1rem;
                 box-shadow: var(--shadow-lg);
                 z-index: 1000;
+                border-top: 1px solid var(--gray);
             }
             
             .nav-items.active {
@@ -1110,6 +1112,10 @@
             .btn {
                 width: 100%;
                 justify-content: center;
+            }
+            
+            .nav-container {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -1357,7 +1363,7 @@
             password: "1234"
         };
 
-        // بيانات المنتجات - تخزين في متغير جافاسكريبت مباشرة
+        // بيانات المنتجات
         let products = [
             {
                 id: 1,
@@ -1448,7 +1454,7 @@
         let cart = [];
 
         // رقم واتساب السوبر ماركت
-        const marketPhone = "966123456789"; // استبدل برقم السوبر ماركت الفعلي
+        const marketPhone = "966123456789";
 
         // تهيئة التطبيق
         function init() {
@@ -1457,48 +1463,74 @@
             updateUI();
             displayAdminProducts();
             
-            // أحداث المستخدم
+            // إضافة الأحداث
+            setupEventListeners();
+        }
+
+        // إعداد جميع الأحداث
+        function setupEventListeners() {
+            // أحداث السلة
             cartIcon.addEventListener('click', openCart);
             closeCart.addEventListener('click', closeCartSidebar);
             overlay.addEventListener('click', closeCartSidebar);
             checkoutBtn.addEventListener('click', checkoutViaWhatsApp);
+            
+            // أحداث البحث والتصفية
             searchInput.addEventListener('input', searchProducts);
-            loginBtn.addEventListener('click', showLoginModal);
-            logoutBtn.addEventListener('click', handleLogout);
-            adminLoginForm.addEventListener('submit', handleAdminLogin);
-            startShoppingBtn.addEventListener('click', scrollToProducts);
-            addProductBtn.addEventListener('click', toggleProductForm);
-            productForm.addEventListener('submit', handleAddProduct);
-            whatsappBtn.addEventListener('click', openWhatsApp);
-            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-            
-            // أحداث التنقل
-            navItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const section = item.getAttribute('data-section');
-                    
-                    if (section === 'admin' && !isAdmin) {
-                        showLoginModal();
-                    } else {
-                        showSection(section);
-                    }
-                    
-                    // إغلاق القائمة على الجوال
-                    if (window.innerWidth <= 767) {
-                        navItemsContainer.classList.remove('active');
-                    }
-                });
-            });
-            
-            // أحداث الفئات
             categoryBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
+                btn.addEventListener('click', (e) => {
                     categoryBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     filterProductsByCategory(btn.getAttribute('data-category'));
                 });
             });
+            
+            // أحداث تسجيل الدخول
+            loginBtn.addEventListener('click', showLoginModal);
+            logoutBtn.addEventListener('click', handleLogout);
+            adminLoginForm.addEventListener('submit', handleAdminLogin);
+            
+            // أحداث المنتجات
+            startShoppingBtn.addEventListener('click', scrollToProducts);
+            addProductBtn.addEventListener('click', toggleProductForm);
+            productForm.addEventListener('submit', handleAddProduct);
+            
+            // أحداث أخرى
+            whatsappBtn.addEventListener('click', openWhatsApp);
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            
+            // أحداث التنقل - تم التعديل هنا
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const section = item.getAttribute('data-section');
+                    handleNavigation(section);
+                });
+            });
+
+            // إغلاق القائمة عند النقر خارجها على الجوال
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 767 && 
+                    !navItemsContainer.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target) &&
+                    navItemsContainer.classList.contains('active')) {
+                    navItemsContainer.classList.remove('active');
+                }
+            });
+        }
+
+        // معالجة التنقل
+        function handleNavigation(section) {
+            if (section === 'admin' && !isAdmin) {
+                showLoginModal();
+            } else {
+                showSection(section);
+            }
+            
+            // إغلاق القائمة على الجوال
+            if (window.innerWidth <= 767) {
+                navItemsContainer.classList.remove('active');
+            }
         }
 
         // تبديل القائمة على الجوال
@@ -1509,22 +1541,16 @@
         // تحديث واجهة المستخدم بناءً على حالة الدخول
         function updateUI() {
             if (isAdmin) {
-                // وضع المسؤول
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'flex';
                 userInfo.style.display = 'flex';
-                
-                // إظهار عناصر المسؤول فقط
                 adminOnlyElements.forEach(el => {
                     el.style.display = 'flex';
                 });
             } else {
-                // وضع الزائر
                 loginBtn.style.display = 'flex';
                 logoutBtn.style.display = 'none';
                 userInfo.style.display = 'none';
-                
-                // إخفاء عناصر المسؤول فقط
                 adminOnlyElements.forEach(el => {
                     el.style.display = 'none';
                 });
@@ -1554,14 +1580,12 @@
             const password = document.getElementById('admin-password').value;
             
             if (username === adminCredentials.username && password === adminCredentials.password) {
-                // تسجيل الدخول ناجح
                 isAdmin = true;
                 hideLoginModal();
                 showSection('admin');
                 updateUI();
                 showAlert('تم تسجيل الدخول كمسؤول بنجاح!', 'success');
             } else {
-                // تسجيل الدخول فاشل
                 loginError.style.display = 'block';
             }
         }
@@ -1592,12 +1616,12 @@
             }
         }
 
-        // معالجة إضافة منتج جديد
+        // معالجة إضافة منتج جديد - تم التعديل هنا
         function handleAddProduct(e) {
             e.preventDefault();
             
-            const name = document.getElementById('product-name').value;
-            const description = document.getElementById('product-description').value;
+            const name = document.getElementById('product-name').value.trim();
+            const description = document.getElementById('product-description').value.trim();
             const price = parseFloat(document.getElementById('product-price').value);
             const category = document.getElementById('product-category').value;
             const imageInput = document.getElementById('product-image');
@@ -1608,7 +1632,7 @@
                 return;
             }
             
-            if (price <= 0) {
+            if (price <= 0 || isNaN(price)) {
                 showAlert('يرجى إدخال سعر صحيح', 'error');
                 return;
             }
@@ -1620,16 +1644,12 @@
                 description: description,
                 price: price,
                 category: category,
-                image: "🛒" // رمز افتراضي
+                image: "🛒"
             };
             
             // معالجة صورة المنتج إذا تم رفعها
             if (imageInput.files && imageInput.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    newProduct.imageUrl = e.target.result;
-                    saveProduct(newProduct);
-                };
                 reader.onload = function(e) {
                     newProduct.imageUrl = e.target.result;
                     saveProduct(newProduct);
@@ -1644,7 +1664,7 @@
             }
         }
 
-        // حفظ المنتج
+        // حفظ المنتج - تم التعديل هنا
         function saveProduct(product) {
             products.push(product);
             
@@ -1656,12 +1676,9 @@
             addProductForm.style.display = 'none';
             productForm.reset();
             showAlert('تم إضافة المنتج بنجاح!', 'success');
-            
-            console.log('تم إضافة المنتج:', product);
-            console.log('المنتجات الحالية:', products);
         }
 
-        // عرض المنتجات في الصفحة الرئيسية
+        // عرض المنتجات في الصفحة الرئيسية - تم التعديل هنا
         function displayProducts(productsToShow) {
             productsContainer.innerHTML = '';
             
@@ -1698,16 +1715,16 @@
                 productsContainer.appendChild(productCard);
             });
             
-            // إضافة أحداث لأزرار إضافة إلى السلة
+            // إضافة أحداث لأزرار إضافة إلى السلة - تم التعديل هنا
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.closest('.add-to-cart').getAttribute('data-id'));
+                    const productId = parseInt(e.target.getAttribute('data-id'));
                     addToCart(productId);
                 });
             });
         }
 
-        // عرض المنتجات في لوحة المسؤول
+        // عرض المنتجات في لوحة المسؤول - تم التعديل هنا
         function displayAdminProducts() {
             productsTableBody.innerHTML = '';
             
@@ -1738,7 +1755,7 @@
                 productsTableBody.appendChild(productRow);
             });
             
-            // إضافة أحداث لأزرار الحذف
+            // إضافة أحداث لأزرار الحذف - تم التعديل هنا
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const productId = parseInt(e.target.closest('.delete-btn').getAttribute('data-id'));
@@ -1759,7 +1776,7 @@
             return categories[category] || category;
         }
 
-        // حذف منتج
+        // حذف منتج - تم التعديل هنا
         function deleteProduct(productId) {
             if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
                 products = products.filter(p => p.id !== productId);
@@ -1849,6 +1866,11 @@
             cartTotal.textContent = `${total.toFixed(2)} ر.س`;
             
             // إضافة الأحداث لأزرار الكمية والإزالة
+            setupCartEventListeners();
+        }
+
+        // إعداد أحداث السلة
+        function setupCartEventListeners() {
             document.querySelectorAll('.decrease').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(e.target.getAttribute('data-id'));
