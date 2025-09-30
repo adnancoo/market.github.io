@@ -1824,7 +1824,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 // تهيئة Supabase
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
 // ==================== إدارة البيانات مع Supabase ====================
 class SupabaseDataManager {
     constructor() {
@@ -1832,9 +1831,9 @@ class SupabaseDataManager {
         this.categories = [];
         this.cart = [];
         this.exchangeRates = {
-            TRY: { rate: 1, symbol: 'ليرة تركية' },
-            SYP: { rate: 18, symbol: 'ليرة سورية' },
-            USD: { rate: 0.032, symbol: 'دولار' }
+            TRY: { rate: 1, symbol: 'ليرة تركية', name: 'الليرة التركية' },
+            SYP: { rate: 18, symbol: 'ليرة سورية', name: 'الليرة السورية' },
+            USD: { rate: 0.032, symbol: 'دولار', name: 'الدولار الأمريكي' }
         };
     }
 
@@ -1889,9 +1888,17 @@ class SupabaseDataManager {
                 .eq('base_currency', 'TRY')
                 .eq('is_active', true);
             
-            if (error) throw error;
+            if (error) {
+                console.error('❌ خطأ في جلب أسعار الصرف:', error);
+                return;
+            }
             
             if (data && data.length > 0) {
+                // إعادة تعيين أسعار الصرف
+                this.exchangeRates = {
+                    TRY: { rate: 1, symbol: 'ليرة تركية', name: 'الليرة التركية' }
+                };
+                
                 data.forEach(rate => {
                     this.exchangeRates[rate.target_currency] = {
                         rate: parseFloat(rate.exchange_rate),
@@ -1899,9 +1906,12 @@ class SupabaseDataManager {
                         name: rate.currency_name_ar
                     };
                 });
+                
+                console.log('✅ تم تحميل أسعار الصرف من قاعدة البيانات:', this.exchangeRates);
+            } else {
+                console.log('⚠️ لا توجد بيانات أسعار صرف، استخدام البيانات الافتراضية');
+                this.loadLocalExchangeRates();
             }
-            
-            console.log('✅ تم تحميل أسعار الصرف:', this.exchangeRates);
         } catch (error) {
             console.error('❌ خطأ في تحميل أسعار الصرف:', error);
             this.loadLocalExchangeRates();
@@ -1909,37 +1919,86 @@ class SupabaseDataManager {
     }
 
     async saveExchangeRates(rates) {
-    try {
-        for (const [currency, data] of Object.entries(rates)) {
-            if (currency !== 'TRY') {
-                const { error } = await supabase
-                    .from('exchange_rates')
-                    .upsert({
-                        base_currency: 'TRY',
-                        target_currency: currency,
-                        exchange_rate: data.rate,
-                        symbol: data.symbol,
-                        currency_name_ar: data.name,
-                        last_updated: new Date().toISOString(),
-                        updated_by: 'admin'
-                    });
-                
-                if (error) throw error;
+        try {
+            console.log('💾 محاولة حفظ أسعار الصرف:', rates);
+            
+            for (const [currency, data] of Object.entries(rates)) {
+                if (currency !== 'TRY') {
+                    console.log(`🔄 معالجة العملة: ${currency}`, data);
+                    
+                    // أولاً: التحقق إذا كان السجل موجوداً
+                    const { data: existingRate, error: checkError } = await supabase
+                        .from('exchange_rates')
+                        .select('id')
+                        .eq('base_currency', 'TRY')
+                        .eq('target_currency', currency)
+                        .single();
+                    
+                    if (checkError && checkError.code !== 'PGRST116') {
+                        console.error(`❌ خطأ في التحقق من العملة ${currency}:`, checkError);
+                        continue;
+                    }
+                    
+                    if (existingRate) {
+                        // تحديث السجل الموجود
+                        const { error: updateError } = await supabase
+                            .from('exchange_rates')
+                            .update({
+                                exchange_rate: data.rate,
+                                symbol: data.symbol,
+                                currency_name_ar: data.name,
+                                last_updated: new Date().toISOString(),
+                                updated_by: 'admin'
+                            })
+                            .eq('base_currency', 'TRY')
+                            .eq('target_currency', currency);
+                        
+                        if (updateError) {
+                            console.error(`❌ خطأ في تحديث العملة ${currency}:`, updateError);
+                            throw updateError;
+                        }
+                        
+                        console.log(`✅ تم تحديث سعر صرف ${currency}`);
+                    } else {
+                        // إضافة سجل جديد
+                        const { error: insertError } = await supabase
+                            .from('exchange_rates')
+                            .insert({
+                                base_currency: 'TRY',
+                                target_currency: currency,
+                                exchange_rate: data.rate,
+                                symbol: data.symbol,
+                                currency_name_ar: data.name,
+                                last_updated: new Date().toISOString(),
+                                updated_by: 'admin'
+                            });
+                        
+                        if (insertError) {
+                            console.error(`❌ خطأ في إضافة العملة ${currency}:`, insertError);
+                            throw insertError;
+                        }
+                        
+                        console.log(`✅ تم إضافة سعر صرف ${currency}`);
+                    }
+                }
             }
+            
+            console.log('✅ تم حفظ جميع أسعار الصرف بنجاح');
+            return true;
+            
+        } catch (error) {
+            console.error('❌ خطأ في حفظ أسعار الصرف:', error);
+            throw error;
         }
-        
-        console.log('✅ تم حفظ أسعار الصرف في قاعدة البيانات');
-    } catch (error) {
-        console.error('❌ خطأ في حفظ أسعار الصرف:', error);
-        throw error;
     }
-}
+
     loadLocalExchangeRates() {
         const savedRates = JSON.parse(localStorage.getItem('marketExchangeRates'));
         if (savedRates) {
-            this.exchangeRates.SYP.rate = savedRates.SYP;
-            this.exchangeRates.USD.rate = savedRates.USD;
+            this.exchangeRates.SYP.rate = savedRates.SYP || 18;
+            this.exchangeRates.USD.rate = savedRates.USD || 0.032;
         }
+        console.log('📁 استخدام أسعار الصرف المحلية:', this.exchangeRates);
     }
 
     async initializeDefaultData() {
@@ -2126,7 +2185,6 @@ class SupabaseDataManager {
         localStorage.setItem('marketCart', JSON.stringify(cart));
     }
 }
-
 // ==================== التطبيق الرئيسي ====================
 class MarketApp {
     constructor() {
