@@ -1909,34 +1909,31 @@ class SupabaseDataManager {
     }
 
     async saveExchangeRates(rates) {
-        try {
-            for (const [currency, data] of Object.entries(rates)) {
-                if (currency !== 'TRY') {
-                    const { error } = await supabase
-                        .from('exchange_rates')
-                        .upsert({
-                            base_currency: 'TRY',
-                            target_currency: currency,
-                            exchange_rate: data.rate,
-                            symbol: data.symbol,
-                            currency_name_ar: data.name,
-                            last_updated: new Date().toISOString(),
-                            updated_by: 'admin'
-                        }, {
-                            onConflict: 'base_currency,target_currency'
-                        });
-                    
-                    if (error) throw error;
-                }
+    try {
+        for (const [currency, data] of Object.entries(rates)) {
+            if (currency !== 'TRY') {
+                const { error } = await supabase
+                    .from('exchange_rates')
+                    .upsert({
+                        base_currency: 'TRY',
+                        target_currency: currency,
+                        exchange_rate: data.rate,
+                        symbol: data.symbol,
+                        currency_name_ar: data.name,
+                        last_updated: new Date().toISOString(),
+                        updated_by: 'admin'
+                    });
+                
+                if (error) throw error;
             }
-            
-            console.log('✅ تم حفظ أسعار الصرف في قاعدة البيانات');
-        } catch (error) {
-            console.error('❌ خطأ في حفظ أسعار الصرف:', error);
-            throw error;
         }
+        
+        console.log('✅ تم حفظ أسعار الصرف في قاعدة البيانات');
+    } catch (error) {
+        console.error('❌ خطأ في حفظ أسعار الصرف:', error);
+        throw error;
     }
-
+}
     loadLocalExchangeRates() {
         const savedRates = JSON.parse(localStorage.getItem('marketExchangeRates'));
         if (savedRates) {
