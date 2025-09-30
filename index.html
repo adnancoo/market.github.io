@@ -1684,6 +1684,59 @@
                 touch-action: manipulation;
             }
         }
+        
+        /* تحسينات إضافية للجوال */
+        .mobile-optimized {
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .touch-friendly {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* تحسينات للشاشات الصغيرة جداً */
+        @media (max-width: 280px) {
+            .logo span {
+                display: none;
+            }
+            
+            .search-box {
+                max-width: 120px;
+            }
+            
+            .currency-selector span {
+                display: none;
+            }
+        }
+        
+        /* تحسينات للوضع الأفقي على الجوال */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                padding: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            
+            .hero p {
+                font-size: 0.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-image i {
+                font-size: 3rem;
+            }
+        }
+        
+        /* تحسينات للشاشات عالية الدقة */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .product-card, .category-btn, .btn {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
     </style>
 </head>
 <body>
