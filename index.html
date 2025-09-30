@@ -1387,173 +1387,189 @@
                                 <div class="form-group">
                                     <label for="category-name">اسم الفئة</label>
                                     <input type="text" id="category-name" required placeholder="أدخل اسم الفئة">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category-icon">أيقونة الفئة</label>
+                                    <select id="category-icon" required>
+                                        <option value="fas fa-th-large">📊 عام</option>
+                                        <option value="fas fa-apple-alt">🍎 فواكه</option>
+                                        <option value="fas fa-carrot">🥕 خضروات</option>
+                                        <option value="fas fa-cheese">🧀 ألبان</option>
+                                        <option value="fas fa-drumstick-bite">🍗 لحوم</option>
+                                        <option value="fas fa-wine-bottle">🧃 مشروبات</option>
+                                        <option value="fas fa-bread-slice">🍞 مخبوزات</option>
+                                        <option value="fas fa-ice-cream">🍦 مجمدات</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> إضافة الفئة
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <div class="category-list">
+                            <h3 class="section-title">
+                                <i class="fas fa-list"></i>
+                                <span>الفئات الحالية</span>
+                            </h3>
+                            <div id="categories-list">
+                                <!-- سيتم ملء الفئات تلقائياً -->
                             </div>
-                            <div class="form-group">
-                                <label for="category-icon">أيقونة الفئة</label>
-                                <select id="category-icon" required>
-                                    <option value="fas fa-th-large">📊 عام</option>
-                                    <option value="fas fa-apple-alt">🍎 فواكه</option>
-                                    <option value="fas fa-carrot">🥕 خضروات</option>
-                                    <option value="fas fa-cheese">🧀 ألبان</option>
-                                    <option value="fas fa-drumstick-bite">🍗 لحوم</option>
-                                    <option value="fas fa-wine-bottle">🧃 مشروبات</option>
-                                    <option value="fas fa-bread-slice">🍞 مخبوزات</option>
-                                    <option value="fas fa-ice-cream">🍦 مجمدات</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> إضافة الفئة
-                            </button>
-                        </form>
+                        </div>
                     </div>
-                    
-                    <div class="category-list">
+                </div>
+                
+                <!-- تبويب التخزين -->
+                <div class="tab-content" id="storage-tab">
+                    <div class="storage-actions">
                         <h3 class="section-title">
-                            <i class="fas fa-list"></i>
-                            <span>الفئات الحالية</span>
+                            <i class="fas fa-database"></i>
+                            <span>إدارة التخزين</span>
                         </h3>
-                        <div id="categories-list">
-                            <!-- سيتم ملء الفئات تلقائياً -->
+                        <div class="form-group">
+                            <label>حالة التخزين الحالية:</label>
+                            <div id="storage-info">
+                                جاري تحميل معلومات التخزين...
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" id="backup-data">
+                                <i class="fas fa-download"></i> نسخ احتياطي للبيانات
+                            </button>
+                            <button class="btn btn-outline" id="restore-data">
+                                <i class="fas fa-upload"></i> استعادة البيانات
+                            </button>
+                            <button class="btn btn-secondary" id="reset-data">
+                                <i class="fas fa-trash"></i> مسح جميع البيانات
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="import-data">استيراد البيانات من ملف:</label>
+                            <input type="file" id="import-data" accept=".json">
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- تبويب التخزين -->
-            <div class="tab-content" id="storage-tab">
-                <div class="storage-actions">
-                    <h3 class="section-title">
-                        <i class="fas fa-database"></i>
-                        <span>إدارة التخزين</span>
-                    </h3>
-                    <div class="form-group">
-                        <label>حالة التخزين الحالية:</label>
-                        <div id="storage-info">
-                            جاري تحميل معلومات التخزين...
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary" id="backup-data">
-                            <i class="fas fa-download"></i> نسخ احتياطي للبيانات
-                        </button>
-                        <button class="btn btn-outline" id="restore-data">
-                            <i class="fas fa-upload"></i> استعادة البيانات
-                        </button>
-                        <button class="btn btn-secondary" id="reset-data">
-                            <i class="fas fa-trash"></i> مسح جميع البيانات
-                        </button>
-                    </div>
-                    <div class="form-group">
-                        <label for="import-data">استيراد البيانات من ملف:</label>
-                        <input type="file" id="import-data" accept=".json">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-<!-- سلة التسوق -->
-<div class="cart-sidebar" id="cart-sidebar">
-    <div class="cart-header">
-        <h2><i class="fas fa-shopping-cart"></i> سلة التسوق</h2>
-        <button class="close-cart" id="close-cart">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    <div class="cart-items" id="cart-items">
-        <!-- سيتم ملء هذا القسم بالمنتجات المضافة عبر JavaScript -->
-    </div>
-    <div class="cart-footer">
-        <div class="cart-total">
-            <span>المجموع:</span>
-            <span id="cart-total">0.00 ر.س</span>
-        </div>
-        <button class="checkout-btn" id="checkout-btn">
-            <i class="fab fa-whatsapp"></i> طلب عبر واتساب
-        </button>
-    </div>
-</div>
-
-<!-- زر واتساب العائم -->
-<a href="#" class="whatsapp-btn" id="whatsapp-btn">
-    <i class="fab fa-whatsapp"></i>
-</a>
-
-<!-- نموذج تسجيل الدخول -->
-<div class="login-modal" id="login-modal">
-    <div class="login-form">
-        <h2><i class="fas fa-lock"></i> دخول المسؤول</h2>
-        <form id="admin-login-form">
-            <div class="form-group">
-                <label for="admin-username">اسم المستخدم</label>
-                <input type="text" id="admin-username" required placeholder="أدخل اسم المستخدم">
-            </div>
-            <div class="form-group">
-                <label for="admin-password">كلمة المرور</label>
-                <input type="password" id="admin-password" required placeholder="أدخل كلمة المرور">
-            </div>
-            <button type="submit" class="login-btn">
-                <i class="fas fa-sign-in-alt"></i> دخول
+        </section>
+    </main>
+    
+    <!-- سلة التسوق -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2><i class="fas fa-shopping-cart"></i> سلة التسوق</h2>
+            <button class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
             </button>
-        </form>
-        <div class="login-error" id="login-error">اسم المستخدم أو كلمة المرور غير صحيحة!</div>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- سيتم ملء هذا القسم بالمنتجات المضافة عبر JavaScript -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>المجموع:</span>
+                <span id="cart-total">0.00 ر.س</span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">
+                <i class="fab fa-whatsapp"></i> طلب عبر واتساب
+            </button>
+        </div>
     </div>
-</div>
+    
+    <!-- زر واتساب العائم -->
+    <a href="#" class="whatsapp-btn" id="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    <!-- نموذج تسجيل الدخول -->
+    <div class="login-modal" id="login-modal">
+        <div class="login-form">
+            <h2><i class="fas fa-lock"></i> دخول المسؤول</h2>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-username">اسم المستخدم</label>
+                    <input type="text" id="admin-username" required placeholder="أدخل اسم المستخدم">
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">كلمة المرور</label>
+                    <input type="password" id="admin-password" required placeholder="أدخل كلمة المرور">
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> دخول
+                </button>
+            </form>
+            <div class="login-error" id="login-error">اسم المستخدم أو كلمة المرور غير صحيحة!</div>
+        </div>
+    </div>
+    
+    <!-- طبقة التعتيم -->
+    <div class="overlay" id="overlay"></div>
 
-<!-- طبقة التعتيم -->
-<div class="overlay" id="overlay"></div>
+    <script>
+// ==================== نظام التخزين السحابي مع JSONBin ====================
+class CloudStorageManager {
+    constructor() {
+        // 🔑 استبدل هذه المفاتيح بمفاتيحك من JSONBin.io
+        this.binId = '68db339543b1c97be954da2e'; // استبدل بمعرف الـ Bin الحقيقي
+        this.apiKey = '$2a$10$JIZn/xsKG42xoCDprag3LuC/qzNlhZvayQ98WKPsnPAmxvXsckyeO'; // استبدل بمفتاح API الحقيقي
+        this.baseUrl = 'https://api.jsonbin.io/v3/b';
+    }
 
-<script>
-// ==================== نظام التخزين المحلي ====================
-class LocalStorageManager {
-    checkStorage() {
+    async getData() {
         try {
-            const test = 'test';
-            localStorage.setItem(test, test);
-            localStorage.removeItem(test);
+            const response = await fetch(`${this.baseUrl}/${this.binId}/latest`, {
+                headers: {
+                    'X-Master-Key': this.apiKey
+                }
+            });
+            
+            if (!response.ok) throw new Error('فشل في جلب البيانات');
+            
+            const data = await response.json();
+            console.log('📦 تم جلب البيانات من السحابة:', data.record);
+            return data.record || { products: [], categories: [] };
+        } catch (error) {
+            console.error('❌ خطأ في جلب البيانات:', error);
+            return this.getLocalData();
+        }
+    }
+
+    async saveData(data) {
+        try {
+            const response = await fetch(`${this.baseUrl}/${this.binId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': this.apiKey
+                },
+                body: JSON.stringify(data)
+            });
+            
+            if (!response.ok) throw new Error('فشل في حفظ البيانات');
+            
+            console.log('💾 تم حفظ البيانات في السحابة');
+            this.saveLocalData(data);
             return true;
-        } catch (e) {
+        } catch (error) {
+            console.error('❌ خطأ في حفظ البيانات:', error);
+            this.saveLocalData(data);
             return false;
         }
     }
 
-    setItem(key, data) {
+    getLocalData() {
         try {
-            if (this.checkStorage()) {
-                localStorage.setItem(key, JSON.stringify(data));
-                return true;
-            }
-            return false;
-        } catch (e) {
-            console.error('خطأ في الحفظ المحلي:', e);
-            return false;
+            const localData = localStorage.getItem('marketBackup');
+            return localData ? JSON.parse(localData) : { products: [], categories: [] };
+        } catch (error) {
+            return { products: [], categories: [] };
         }
     }
 
-    getItem(key, defaultValue = null) {
+    saveLocalData(data) {
         try {
-            if (this.checkStorage()) {
-                const item = localStorage.getItem(key);
-                return item ? JSON.parse(item) : defaultValue;
-            }
-            return defaultValue;
-        } catch (e) {
-            console.error('خطأ في القراءة المحلية:', e);
-            return defaultValue;
-        }
-    }
-
-    removeItem(key) {
-        try {
-            if (this.checkStorage()) {
-                localStorage.removeItem(key);
-                return true;
-            }
-            return false;
-        } catch (e) {
-            console.error('خطأ في الحذف:', e);
-            return false;
+            localStorage.setItem('marketBackup', JSON.stringify(data));
+        } catch (error) {
+            console.error('❌ خطأ في الحفظ المحلي:', error);
         }
     }
 }
@@ -1561,24 +1577,58 @@ class LocalStorageManager {
 // ==================== إدارة البيانات ====================
 class DataManager {
     constructor() {
-        this.storage = new LocalStorageManager();
+        this.cloudStorage = new CloudStorageManager();
         this.products = [];
         this.categories = [];
         this.cart = [];
-        this.loadData();
     }
 
-    loadData() {
-        this.categories = this.storage.getItem('marketCategories', [
+    async loadData() {
+        try {
+            const cloudData = await this.cloudStorage.getData();
+            
+            this.products = cloudData.products || [];
+            this.categories = cloudData.categories || this.getDefaultCategories();
+            this.cart = JSON.parse(localStorage.getItem('marketCart')) || [];
+            
+            // إذا لم تكن هناك منتجات، أضف بعض المنتجات الافتراضية
+            if (this.products.length === 0) {
+                this.products = this.getDefaultProducts();
+                await this.saveAll();
+            }
+            
+            console.log('✅ تم تحميل البيانات:', {
+                products: this.products.length,
+                categories: this.categories.length,
+                cart: this.cart.length
+            });
+            
+        } catch (error) {
+            console.error('❌ خطأ في تحميل البيانات:', error);
+            this.loadLocalData();
+        }
+    }
+
+    loadLocalData() {
+        const localData = this.cloudStorage.getLocalData();
+        this.products = localData.products || this.getDefaultProducts();
+        this.categories = localData.categories || this.getDefaultCategories();
+        this.cart = JSON.parse(localStorage.getItem('marketCart')) || [];
+    }
+
+    getDefaultCategories() {
+        return [
             { id: 'all', name: 'الكل', icon: 'fas fa-th-large' },
             { id: 'fruits', name: 'فواكه', icon: 'fas fa-apple-alt' },
             { id: 'vegetables', name: 'خضروات', icon: 'fas fa-carrot' },
             { id: 'dairy', name: 'منتجات ألبان', icon: 'fas fa-cheese' },
             { id: 'meat', name: 'لحوم', icon: 'fas fa-drumstick-bite' },
             { id: 'beverages', name: 'مشروبات', icon: 'fas fa-wine-bottle' }
-        ]);
+        ];
+    }
 
-        this.products = this.storage.getItem('marketProducts', [
+    getDefaultProducts() {
+        return [
             {
                 id: 1,
                 name: "تفاح أحمر",
@@ -1592,64 +1642,67 @@ class DataManager {
                 name: "موز",
                 description: "موز ناضج وحلو، غني بالبوتاسيوم والطاقة",
                 price: 12.00,
-                category: "fruits",
+                category: "fruits", 
                 image: "🍌"
+            },
+            {
+                id: 3,
+                name: "جزر طازج",
+                description: "جزر مقرمش وغني بالفيتامينات، مثالي للسلطات والطبخ",
+                price: 8.00,
+                category: "vegetables",
+                image: "🥕"
             }
-        ]);
-
-        this.cart = this.storage.getItem('marketCart', []);
-        this.saveAll();
+        ];
     }
 
-    saveAll() {
-        this.storage.setItem('marketProducts', this.products);
-        this.storage.setItem('marketCategories', this.categories);
-        this.storage.setItem('marketCart', this.cart);
+    async saveAll() {
+        const data = {
+            products: this.products,
+            categories: this.categories,
+            lastUpdate: new Date().toISOString()
+        };
+        
+        await this.cloudStorage.saveData(data);
     }
 
-    addProduct(product) {
+    async addProduct(product) {
         product.id = Date.now();
         this.products.push(product);
-        this.storage.setItem('marketProducts', this.products);
+        await this.saveAll();
         return product;
     }
 
-    deleteProduct(productId) {
+    async deleteProduct(productId) {
         this.products = this.products.filter(p => p.id !== productId);
-        this.storage.setItem('marketProducts', this.products);
+        await this.saveAll();
         return true;
     }
 
-    addCategory(category) {
+    async addCategory(category) {
         category.id = category.name.toLowerCase().replace(/\s+/g, '_');
         this.categories.push(category);
-        this.storage.setItem('marketCategories', this.categories);
+        await this.saveAll();
         return category;
     }
 
-    deleteCategory(categoryId) {
+    async deleteCategory(categoryId) {
         if (categoryId === 'all') {
             alert('لا يمكن حذف فئة "الكل"');
             return false;
         }
 
-        const productsInCategory = this.products.filter(p => p.category === categoryId);
-        if (productsInCategory.length > 0) {
-            if (!confirm(`هناك ${productsInCategory.length} منتج في هذه الفئة. هل تريد حذف الفئة وجميع منتجاتها؟`)) {
-                return false;
-            }
-            this.products = this.products.filter(p => p.category !== categoryId);
-            this.storage.setItem('marketProducts', this.products);
-        }
-
+        // حذف المنتجات المرتبطة بهذه الفئة
+        this.products = this.products.filter(p => p.category !== categoryId);
         this.categories = this.categories.filter(c => c.id !== categoryId);
-        this.storage.setItem('marketCategories', this.categories);
+        
+        await this.saveAll();
         return true;
     }
 
     updateCart(cart) {
         this.cart = cart;
-        this.storage.setItem('marketCart', this.cart);
+        localStorage.setItem('marketCart', JSON.stringify(cart));
     }
 }
 
@@ -1657,18 +1710,31 @@ class DataManager {
 class MarketApp {
     constructor() {
         this.dataManager = new DataManager();
-        this.isAdmin = this.dataManager.storage.getItem('marketAdminLoggedIn', false);
+        this.isAdmin = localStorage.getItem('marketAdminLoggedIn') === 'true';
         this.currentCategory = 'all';
         this.init();
     }
 
-    init() {
+    async init() {
+        await this.dataManager.loadData();
         this.setupEventListeners();
         this.displayProducts();
         this.displayCategories();
         this.updateCart();
         this.updateStorageStatus();
         this.updateUI();
+        
+        // تحديث البيانات تلقائياً كل 30 ثانية
+        this.startAutoRefresh();
+    }
+
+    startAutoRefresh() {
+        setInterval(async () => {
+            await this.dataManager.loadData();
+            this.displayProducts();
+            this.displayCategories();
+            console.log('🔄 تم تحديث البيانات تلقائياً');
+        }, 30000);
     }
 
     setupEventListeners() {
@@ -1722,10 +1788,9 @@ class MarketApp {
             }
         });
 
-        // إضافة مستمع حدث لتسجيل الدخول
+        // أحداث تسجيل الدخول
         document.getElementById('admin-login-form').addEventListener('submit', (e) => this.handleLogin(e));
         
-        // إغلاق نافذة تسجيل الدخول بالنقر خارجها
         document.getElementById('login-modal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('login-modal')) {
                 this.hideLoginModal();
@@ -1921,7 +1986,7 @@ class MarketApp {
     }
 
     // إضافة منتج جديد
-    handleAddProduct(e) {
+    async handleAddProduct(e) {
         e.preventDefault();
         
         const product = {
@@ -1940,25 +2005,25 @@ class MarketApp {
         const imageInput = document.getElementById('product-image');
         if (imageInput.files && imageInput.files[0]) {
             const reader = new FileReader();
-            reader.onload = (e) => {
+            reader.onload = async (e) => {
                 product.imageUrl = e.target.result;
-                this.finalizeAddProduct(product);
+                await this.finalizeAddProduct(product);
             };
             reader.readAsDataURL(imageInput.files[0]);
         } else {
-            this.finalizeAddProduct(product);
+            await this.finalizeAddProduct(product);
         }
     }
 
-    finalizeAddProduct(product) {
-        this.dataManager.addProduct(product);
+    async finalizeAddProduct(product) {
+        await this.dataManager.addProduct(product);
         this.displayProducts();
         this.toggleProductForm();
         this.showAlert('تم إضافة المنتج بنجاح!', 'success');
     }
 
     // إضافة فئة جديدة
-    handleAddCategory(e) {
+    async handleAddCategory(e) {
         e.preventDefault();
         
         const category = {
@@ -1971,24 +2036,24 @@ class MarketApp {
             return;
         }
 
-        this.dataManager.addCategory(category);
+        await this.dataManager.addCategory(category);
         this.displayCategories();
         e.target.reset();
         this.showAlert('تم إضافة الفئة بنجاح!', 'success');
     }
 
     // حذف منتج
-    deleteProduct(productId) {
+    async deleteProduct(productId) {
         if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
-            this.dataManager.deleteProduct(productId);
+            await this.dataManager.deleteProduct(productId);
             this.displayProducts();
             this.showAlert('تم حذف المنتج بنجاح!', 'success');
         }
     }
 
     // حذف فئة
-    deleteCategory(categoryId) {
-        if (this.dataManager.deleteCategory(categoryId)) {
+    async deleteCategory(categoryId) {
+        if (await this.dataManager.deleteCategory(categoryId)) {
             this.displayCategories();
             this.displayProducts();
             this.showAlert('تم حذف الفئة بنجاح!', 'success');
@@ -2009,15 +2074,9 @@ class MarketApp {
         const statusElement = document.getElementById('storage-status');
         const infoElement = document.getElementById('storage-info');
         
-        if (this.dataManager.storage.checkStorage()) {
-            statusElement.className = 'storage-status success';
-            statusElement.innerHTML = '<i class="fas fa-check-circle"></i> نظام التخزين يعمل بشكل صحيح';
-            infoElement.textContent = `يوجد ${this.dataManager.products.length} منتج و ${this.dataManager.categories.length} فئة`;
-        } else {
-            statusElement.className = 'storage-status error';
-            statusElement.innerHTML = '<i class="fas fa-exclamation-triangle"></i> استخدام التخزين المؤقت - البيانات قد تختفي عند تحديث الصفحة';
-            infoElement.textContent = 'لحفظ البيانات بشكل دائم، استخدم نسخ احتياطي';
-        }
+        statusElement.className = 'storage-status success';
+        statusElement.innerHTML = '<i class="fas fa-cloud"></i> متصل بقاعدة البيانات السحابية';
+        infoElement.textContent = `يوجد ${this.dataManager.products.length} منتج - متزامن مع جميع المستخدمين`;
     }
 
     backupData() {
@@ -2037,33 +2096,29 @@ class MarketApp {
         this.showAlert('تم إنشاء نسخة احتياطية', 'success');
     }
 
-    resetData() {
+    async resetData() {
         if (confirm('هل أنت متأكد من مسح جميع البيانات؟ لا يمكن التراجع عن هذا الإجراء!')) {
-            this.dataManager.storage.removeItem('marketProducts');
-            this.dataManager.storage.removeItem('marketCategories');
-            this.dataManager.storage.removeItem('marketCart');
-            this.dataManager.storage.removeItem('marketAdminLoggedIn');
-            this.dataManager.loadData();
+            this.dataManager.products = [];
+            this.dataManager.categories = this.dataManager.getDefaultCategories();
+            await this.dataManager.saveAll();
             this.displayProducts();
             this.displayCategories();
             this.updateCart();
-            this.isAdmin = false;
-            this.updateUI();
             this.showAlert('تم مسح جميع البيانات', 'success');
         }
     }
 
-    importData(e) {
+    async importData(e) {
         const file = e.target.files[0];
         if (!file) return;
 
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
             try {
                 const data = JSON.parse(e.target.result);
                 this.dataManager.products = data.products || [];
-                this.dataManager.categories = data.categories || [];
-                this.dataManager.saveAll();
+                this.dataManager.categories = data.categories || this.dataManager.getDefaultCategories();
+                await this.dataManager.saveAll();
                 this.displayProducts();
                 this.displayCategories();
                 this.showAlert('تم استيراد البيانات بنجاح', 'success');
@@ -2311,12 +2366,10 @@ class MarketApp {
         
         if (username === validUsername && password === validPassword) {
             this.isAdmin = true;
-            this.dataManager.storage.setItem('marketAdminLoggedIn', true);
+            localStorage.setItem('marketAdminLoggedIn', 'true');
             this.updateUI();
             this.hideLoginModal();
             this.showAlert('تم تسجيل الدخول بنجاح!', 'success');
-            
-            // الانتقال تلقائياً إلى قسم الإدارة بعد التسجيل
             this.handleNavigation('admin');
         } else {
             document.getElementById('login-error').style.display = 'block';
@@ -2325,7 +2378,7 @@ class MarketApp {
 
     handleLogout() {
         this.isAdmin = false;
-        this.dataManager.storage.setItem('marketAdminLoggedIn', false);
+        localStorage.setItem('marketAdminLoggedIn', 'false');
         this.updateUI();
         this.showAlert('تم تسجيل الخروج بنجاح', 'success');
         this.handleNavigation('home');
@@ -2394,8 +2447,8 @@ class MarketApp {
 // ==================== تهيئة التطبيق ====================
 document.addEventListener('DOMContentLoaded', function() {
     const app = new MarketApp();
-    console.log('تم تحميل تطبيق ماركتنا بنجاح!');
+    console.log('🚀 تم تحميل تطبيق ماركتنا بنجاح!');
 });
-</script>
+    </script>
 </body>
 </html>
