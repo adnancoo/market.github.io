@@ -1825,23 +1825,24 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // تهيئة Supabase
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// أسعار الصرف (يمكن تحديثها يدوياً)
-let exchangeRates = {
-    TRY: { rate: 1, symbol: 'ليرة تركية' },
-    SYP: { rate: 18, symbol: 'ليرة سورية' },
-    USD: { rate: 0.032, symbol: 'دولار' }
-};
-
 // ==================== إدارة البيانات مع Supabase ====================
 class SupabaseDataManager {
     constructor() {
         this.products = [];
         this.categories = [];
         this.cart = [];
+        this.exchangeRates = {
+            TRY: { rate: 1, symbol: 'ليرة تركية' },
+            SYP: { rate: 18, symbol: 'ليرة سورية' },
+            USD: { rate: 0.032, symbol: 'دولار' }
+        };
     }
 
     async loadData() {
         try {
+            // جلب أسعار الصرف أولاً
+            await this.loadExchangeRates();
+            
             // جلب المنتجات من Supabase
             const { data: productsData, error: productsError } = await supabase
                 .from('products')
@@ -1870,12 +1871,77 @@ class SupabaseDataManager {
             console.log('✅ تم تحميل البيانات من Supabase:', {
                 products: this.products.length,
                 categories: this.categories.length,
-                cart: this.cart.length
+                cart: this.cart.length,
+                exchangeRates: this.exchangeRates
             });
             
         } catch (error) {
             console.error('❌ خطأ في تحميل البيانات:', error);
             this.loadLocalData();
+        }
+    }
+
+    async loadExchangeRates() {
+        try {
+            const { data, error } = await supabase
+                .from('exchange_rates')
+                .select('*')
+                .eq('base_currency', 'TRY')
+                .eq('is_active', true);
+            
+            if (error) throw error;
+            
+            if (data && data.length > 0) {
+                data.forEach(rate => {
+                    this.exchangeRates[rate.target_currency] = {
+                        rate: parseFloat(rate.exchange_rate),
+                        symbol: rate.symbol,
+                        name: rate.currency_name_ar
+                    };
+                });
+            }
+            
+            console.log('✅ تم تحميل أسعار الصرف:', this.exchangeRates);
+        } catch (error) {
+            console.error('❌ خطأ في تحميل أسعار الصرف:', error);
+            this.loadLocalExchangeRates();
+        }
+    }
+
+    async saveExchangeRates(rates) {
+        try {
+            for (const [currency, data] of Object.entries(rates)) {
+                if (currency !== 'TRY') {
+                    const { error } = await supabase
+                        .from('exchange_rates')
+                        .upsert({
+                            base_currency: 'TRY',
+                            target_currency: currency,
+                            exchange_rate: data.rate,
+                            symbol: data.symbol,
+                            currency_name_ar: data.name,
+                            last_updated: new Date().toISOString(),
+                            updated_by: 'admin'
+                        }, {
+                            onConflict: 'base_currency,target_currency'
+                        });
+                    
+                    if (error) throw error;
+                }
+            }
+            
+            console.log('✅ تم حفظ أسعار الصرف في قاعدة البيانات');
+        } catch (error) {
+            console.error('❌ خطأ في حفظ أسعار الصرف:', error);
+            throw error;
+        }
+    }
+
+    loadLocalExchangeRates() {
+        const savedRates = JSON.parse(localStorage.getItem('marketExchangeRates'));
+        if (savedRates) {
+            this.exchangeRates.SYP.rate = savedRates.SYP;
+            this.exchangeRates.USD.rate = savedRates.USD;
         }
     }
 
@@ -1951,6 +2017,7 @@ class SupabaseDataManager {
         this.products = localData.products || this.getDefaultProducts();
         this.categories = localData.categories || this.getDefaultCategories();
         this.cart = JSON.parse(localStorage.getItem('marketCart')) || [];
+        this.loadLocalExchangeRates();
     }
 
     async addProduct(product) {
@@ -1962,7 +2029,7 @@ class SupabaseDataManager {
             
             if (error) throw error;
             
-            this.products.unshift(data[0]); // إضافة المنتج الجديد في البداية
+            this.products.unshift(data[0]);
             return data[0];
         } catch (error) {
             console.error('❌ خطأ في إضافة المنتج:', error);
@@ -1980,7 +2047,6 @@ class SupabaseDataManager {
             
             if (error) throw error;
             
-            // تحديث المنتج في المصفوفة المحلية
             const index = this.products.findIndex(p => p.id === productId);
             if (index !== -1) {
                 this.products[index] = { ...this.products[index], ...productData };
@@ -2086,7 +2152,6 @@ class MarketApp {
         this.updateCurrencySelector();
         this.getUserLocation();
         this.updateUI();
-        this.loadExchangeRates();
         
         // الاشتراك في التحديثات الفورية
         this.subscribeToRealtimeUpdates();
@@ -2118,6 +2183,21 @@ class MarketApp {
                     this.displayCategories();
                     this.updateCategoriesList();
                     this.updateProductCategoryOptions();
+                }
+            )
+            .subscribe();
+
+        // الاشتراك في تحديثات أسعار الصرف
+        supabase
+            .channel('exchange-rates-changes')
+            .on('postgres_changes', 
+                { event: '*', schema: 'public', table: 'exchange_rates' }, 
+                async (payload) => {
+                    console.log('🔄 تم تحديث أسعار الصرف:', payload);
+                    await this.dataManager.loadExchangeRates();
+                    this.displayProducts();
+                    this.updateCart();
+                    this.updateExchangeRateUI();
                 }
             )
             .subscribe();
@@ -2259,7 +2339,7 @@ class MarketApp {
             <div class="product-info">
                 <div class="product-name">${product.name}</div>
                 <div class="product-description">${product.description}</div>
-                <div class="product-price">${convertedPrice} ${exchangeRates[this.currentCurrency].symbol}</div>
+                <div class="product-price">${convertedPrice} ${this.dataManager.exchangeRates[this.currentCurrency].symbol}</div>
                 <button class="add-to-cart" data-id="${product.id}">
                     <i class="fas fa-cart-plus"></i> إضافة إلى السلة
                 </button>
@@ -2573,23 +2653,12 @@ class MarketApp {
     }
 
     // إدارة أسعار الصرف
-    loadExchangeRates() {
-        const savedRates = JSON.parse(localStorage.getItem('marketExchangeRates'));
-        if (savedRates) {
-            exchangeRates.SYP.rate = savedRates.SYP;
-            exchangeRates.USD.rate = savedRates.USD;
-        }
-        
-        // تحديث واجهة المستخدم
-        this.updateExchangeRateUI();
-    }
-
     updateExchangeRateUI() {
-        document.getElementById('syp-rate').value = exchangeRates.SYP.rate;
-        document.getElementById('usd-rate').value = exchangeRates.USD.rate;
+        document.getElementById('syp-rate').value = this.dataManager.exchangeRates.SYP.rate;
+        document.getElementById('usd-rate').value = this.dataManager.exchangeRates.USD.rate;
     }
 
-    saveExchangeRates() {
+    async saveExchangeRates() {
         const sypRate = parseFloat(document.getElementById('syp-rate').value);
         const usdRate = parseFloat(document.getElementById('usd-rate').value);
         
@@ -2598,18 +2667,24 @@ class MarketApp {
             return;
         }
         
-        exchangeRates.SYP.rate = sypRate;
-        exchangeRates.USD.rate = usdRate;
+        this.dataManager.exchangeRates.SYP.rate = sypRate;
+        this.dataManager.exchangeRates.USD.rate = usdRate;
         
-        // حفظ في localStorage
-        localStorage.setItem('marketExchangeRates', JSON.stringify({
-            SYP: sypRate,
-            USD: usdRate
-        }));
-        
-        this.showAlert('تم حفظ أسعار الصرف بنجاح', 'success');
-        this.displayProducts();
-        this.updateCart();
+        try {
+            await this.dataManager.saveExchangeRates(this.dataManager.exchangeRates);
+            
+            // حفظ محلي كنسخة احتياطية
+            localStorage.setItem('marketExchangeRates', JSON.stringify({
+                SYP: sypRate,
+                USD: usdRate
+            }));
+            
+            this.showAlert('تم حفظ أسعار الصرف بنجاح', 'success');
+            this.displayProducts();
+            this.updateCart();
+        } catch (error) {
+            this.showAlert('خطأ في حفظ أسعار الصرف', 'error');
+        }
     }
 
     // إدارة التخزين
@@ -2763,7 +2838,7 @@ class MarketApp {
                     </div>
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">${convertedPrice} ${exchangeRates[this.currentCurrency].symbol}</div>
+                        <div class="cart-item-price">${convertedPrice} ${this.dataManager.exchangeRates[this.currentCurrency].symbol}</div>
                         <div class="cart-item-quantity">
                             <button class="quantity-btn decrease" data-id="${item.id}">-</button>
                             <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
@@ -2781,7 +2856,7 @@ class MarketApp {
         }
         
         const convertedTotal = this.convertPrice(total);
-        cartTotal.textContent = `${convertedTotal} ${exchangeRates[this.currentCurrency].symbol}`;
+        cartTotal.textContent = `${convertedTotal} ${this.dataManager.exchangeRates[this.currentCurrency].symbol}`;
     }
 
     setupCartEventListeners() {
@@ -2897,12 +2972,12 @@ class MarketApp {
         
         this.dataManager.cart.forEach(item => {
             const convertedPrice = this.convertPrice(item.price);
-            orderText += `- ${item.name} (${item.quantity} × ${convertedPrice} ${exchangeRates[this.currentCurrency].symbol})\n`;
+            orderText += `- ${item.name} (${item.quantity} × ${convertedPrice} ${this.dataManager.exchangeRates[this.currentCurrency].symbol})\n`;
         });
         
         const total = this.dataManager.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         const convertedTotal = this.convertPrice(total);
-        orderText += `\nالمجموع: ${convertedTotal} ${exchangeRates[this.currentCurrency].symbol}\n\n`;
+        orderText += `\nالمجموع: ${convertedTotal} ${this.dataManager.exchangeRates[this.currentCurrency].symbol}\n\n`;
         
         // إضافة رابط الموقع الجغرافي إذا كان متاحاً
         if (this.userLocation) {
@@ -2955,7 +3030,7 @@ class MarketApp {
     }
 
     convertPrice(price) {
-        const converted = price * exchangeRates[this.currentCurrency].rate;
+        const converted = price * this.dataManager.exchangeRates[this.currentCurrency].rate;
         return converted.toFixed(2);
     }
 
@@ -2995,7 +3070,7 @@ class MarketApp {
         document.getElementById('login-error').style.display = 'none';
     }
 
-    handleLogin(e) {
+    async handleLogin(e) {
         e.preventDefault();
         
         const username = document.getElementById('admin-username').value.trim();
@@ -3041,6 +3116,7 @@ class MarketApp {
                 document.getElementById('home-section').style.display = 'none';
                 document.getElementById('admin-section').style.display = 'block';
                 this.updateStorageStatus();
+                this.updateExchangeRateUI();
             } else {
                 this.showLoginModal();
             }
