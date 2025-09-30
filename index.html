@@ -8,35 +8,35 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
-            --primary: #6C63FF;
-            --primary-light: #8B85FF;
-            --primary-dark: #524BC2;
-            --secondary: #FF6584;
-            --accent: #36D1DC;
-            --success: #4CAF50;
-            --warning: #FF9800;
-            --error: #F44336;
-            --text: #2D3748;
-            --text-light: #718096;
-            --light: #F7FAFC;
-            --white: #FFFFFF;
-            --gray: #E2E8F0;
-            --dark: #1A202C;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --light: #f9fafb;
+            --white: #ffffff;
+            --gray: #e5e7eb;
+            --dark: #111827;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --gradient: linear-gradient(135deg, #6C63FF 0%, #36D1DC 100%);
-            --gradient-dark: linear-gradient(135deg, #524BC2 0%, #2A93D5 100%);
+            --gradient: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            --gradient-dark: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', 'Tajawal', system-ui, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            background: var(--light);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
@@ -103,7 +103,7 @@
 
         .search-box input:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
         }
 
         .search-box i {
@@ -112,6 +112,32 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-light);
+        }
+
+        .currency-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--gray);
+        }
+
+        .currency-selector:hover {
+            border-color: var(--primary);
+        }
+
+        .currency-selector select {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary);
         }
 
         .cart-icon {
@@ -265,7 +291,7 @@
         }
 
         .btn-secondary:hover {
-            background: #e05575;
+            background: #0da271;
             transform: translateY(-2px);
         }
 
@@ -384,7 +410,7 @@
             background: var(--primary);
             color: var(--white);
             border-color: var(--primary);
-            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
 
         .category-btn:hover:not(.active) {
@@ -397,6 +423,18 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .product-card {
@@ -488,7 +526,7 @@
         .add-to-cart:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
 
         /* سلة التسوق */
@@ -670,14 +708,224 @@
             box-shadow: var(--shadow);
         }
 
-        /* نموذج إضافة منتج */
-        .add-product-form {
+        /* زر واتساب */
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* التصميم المتجاوب */
+        @media (min-width: 768px) {
+            .header-container, .nav-container, main {
+                padding: 0 1.5rem;
+            }
+            
+            .hero {
+                flex-direction: row;
+                text-align: right;
+                padding: 3rem 2rem;
+            }
+            
+            .hero-content {
+                margin-bottom: 0;
+                margin-left: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-image i {
+                font-size: 10rem;
+            }
+            
+            .cart-sidebar {
+                width: 400px;
+                right: -400px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .header-container, .nav-container, main {
+                padding: 0 2rem;
+            }
+            
+            .hero {
+                padding: 4rem 3rem;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-image i {
+                font-size: 12rem;
+            }
+            
+            .search-box {
+                max-width: 350px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-items {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+                border-top: 1px solid var(--gray);
+            }
+            
+            .nav-items.active {
+                display: flex;
+            }
+            
+            .user-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .nav-container {
+                flex-wrap: wrap;
+            }
+            
+            .currency-selector {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* تأثيرات للعناصر */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* قسم التنبيهات */
+        .alert {
+            padding: 0.9rem 1.2rem;
+            margin-bottom: 1.2rem;
+            border-radius: 10px;
+            display: none;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        
+        /* نموذج تسجيل الدخول */
+        .login-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-form {
             background: var(--white);
             padding: 2rem;
             border-radius: 16px;
-            box-shadow: var(--shadow);
-            margin-top: 2rem;
-            display: none;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .form-group {
@@ -691,7 +939,7 @@
             font-size: 0.9rem;
         }
 
-        .form-group input, .form-group textarea, .form-group select {
+        .form-group input {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid var(--gray);
@@ -701,57 +949,18 @@
             font-family: inherit;
         }
 
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+        .form-group input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
         }
 
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        .file-upload {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .file-upload input {
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .file-upload-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.8rem;
-            border: 2px dashed var(--gray);
-            border-radius: 10px;
-            background: var(--light);
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .file-upload-label:hover {
-            border-color: var(--primary);
-            background: rgba(108, 99, 255, 0.05);
-        }
-
-        .submit-product {
+        .login-btn {
             background: var(--primary);
             color: var(--white);
             border: none;
-            padding: 0.9rem 1.5rem;
+            padding: 0.9rem;
+            width: 100%;
             border-radius: 10px;
             cursor: pointer;
             font-size: 1rem;
@@ -759,16 +968,60 @@
             transition: all 0.3s;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
         }
 
-        .submit-product:hover {
+        .login-btn:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
         }
 
-        /* صفحة إدارة المنتجات */
+        .login-error {
+            color: var(--error);
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        /* طبقة التعتيم */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+        
+        /* تنبيه التوصيل */
+        .delivery-alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .delivery-alert i {
+            color: #f39c12;
+        }
+
+        /* قسم إدارة المتجر */
         .admin-section {
             display: none;
         }
@@ -886,6 +1139,93 @@
             display: block;
         }
 
+        /* نموذج إضافة منتج */
+        .add-product-form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--gray);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            transition: border 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border: 2px dashed var(--gray);
+            border-radius: 10px;
+            background: var(--light);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .file-upload-label:hover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .submit-product {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submit-product:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
         /* إدارة الفئات */
         .categories-management {
             display: grid;
@@ -934,288 +1274,158 @@
             border-color: #fecaca;
         }
 
-        /* نموذج تسجيل الدخول */
-        .login-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 1rem;
-        }
-
-        .login-modal.active {
-            display: flex;
-        }
-
-        .login-form {
+        /* إدارة أسعار الصرف */
+        .exchange-management {
             background: var(--white);
             padding: 2rem;
             border-radius: 16px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow);
         }
 
-        .login-form h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+        .exchange-rates-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
         }
 
-        .login-btn {
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 0.9rem;
-            width: 100%;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
+        .exchange-rate-card {
+            background: var(--light);
+            border: 2px solid var(--gray);
+            border-radius: 12px;
+            padding: 1.5rem;
             transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
         }
 
-        .login-btn:hover {
-            background: var(--primary-dark);
+        .exchange-rate-card:hover {
+            border-color: var(--primary);
             transform: translateY(-2px);
         }
 
-        .login-error {
-            color: var(--error);
-            text-align: center;
-            margin-top: 1rem;
-            display: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* طبقة التعتيم */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 1999;
-            display: none;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-
-        /* قسم التنبيهات */
-        .alert {
-            padding: 0.9rem 1.2rem;
-            margin-bottom: 1.2rem;
-            border-radius: 10px;
-            display: none;
-            align-items: center;
-            gap: 0.8rem;
-            font-size: 0.9rem;
-        }
-
-        .alert-success {
-            background: #d1fae5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        /* زر واتساب */
-        .whatsapp-btn {
-            background: #25D366;
-            color: white;
-            position: fixed;
-            bottom: 1.5rem;
-            left: 1.5rem;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
+        .rate-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-            z-index: 100;
-            transition: all 0.3s;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray);
         }
 
-        .whatsapp-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
+        .rate-header i {
+            font-size: 2rem;
             color: var(--primary);
-            cursor: pointer;
         }
 
-        /* التصميم المتجاوب */
-        @media (min-width: 768px) {
-            .header-container, .nav-container, main {
-                padding: 0 1.5rem;
-            }
-            
-            .hero {
-                flex-direction: row;
-                text-align: right;
-                padding: 3rem 2rem;
-            }
-            
-            .hero-content {
-                margin-bottom: 0;
-                margin-left: 2rem;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-image i {
-                font-size: 10rem;
-            }
-            
-            .admin-header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-            
-            .cart-sidebar {
-                width: 400px;
-                right: -400px;
-            }
+        .rate-header h4 {
+            margin: 0;
+            color: var(--dark);
         }
 
-        @media (min-width: 1024px) {
-            .header-container, .nav-container, main {
-                padding: 0 2rem;
-            }
-            
-            .hero {
-                padding: 4rem 3rem;
-            }
-            
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            .hero-image i {
-                font-size: 12rem;
-            }
-            
-            .search-box {
-                max-width: 350px;
-            }
+        .rate-info p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
         }
 
-        @media (max-width: 767px) {
-            .mobile-menu-btn {
-                display: block;
+        .rate-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-align: center;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+        }
+
+        .rate-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .rate-input {
+            padding: 0.8rem;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            transition: border 0.3s;
+        }
+
+        .rate-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .rate-controls span {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .exchange-actions {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .exchange-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-right: 4px solid var(--primary);
+        }
+
+        .exchange-info h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .exchange-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exchange-info li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-right: 1.5rem;
+        }
+
+        .exchange-info li:before {
+            content: '•';
+            color: var(--primary);
+            position: absolute;
+            right: 0;
+            font-weight: bold;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .exchange-rates-container {
+                grid-template-columns: 1fr;
             }
             
-            .nav-items {
-                display: none;
-                position: absolute;
-                top: 100%;
-                right: 0;
-                width: 100%;
-                background: var(--white);
+            .exchange-actions {
                 flex-direction: column;
-                padding: 1rem;
-                box-shadow: var(--shadow-lg);
-                z-index: 1000;
-                border-top: 1px solid var(--gray);
             }
             
-            .nav-items.active {
-                display: flex;
+            .exchange-actions .btn {
+                width: 100%;
             }
             
-            .user-actions {
+            .form-actions {
                 flex-direction: column;
-                width: 100%;
             }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .nav-container {
-                flex-wrap: wrap;
-            }
-        }
-
-        /* تأثيرات للعناصر */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .floating {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        /* مؤشر التحميل */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -1231,6 +1441,14 @@
                 <div class="search-box">
                     <i class="fas fa-search"></i>
                     <input type="text" id="search-input" placeholder="ابحث عن منتج...">
+                </div>
+                <div class="currency-selector">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <select id="currency-select">
+                        <option value="TRY">ليرة تركية</option>
+                        <option value="SYP">ليرة سورية</option>
+                        <option value="USD">دولار</option>
+                    </select>
                 </div>
                 <div class="cart-icon" id="cart-icon">
                     <i class="fas fa-shopping-cart"></i>
@@ -1273,6 +1491,12 @@
     <main>
         <!-- قسم التنبيهات -->
         <div class="alert" id="alert"></div>
+        
+        <!-- تنبيه التوصيل -->
+        <div class="delivery-alert">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>نقوم بالتوصيل فقط داخل مدينة معرة النعمان</span>
+        </div>
         
         <!-- الصفحة الرئيسية -->
         <section id="home-section">
@@ -1322,6 +1546,7 @@
                 <div class="tabs">
                     <button class="tab active" data-tab="products">إدارة المنتجات</button>
                     <button class="tab" data-tab="categories">إدارة الفئات</button>
+                    <button class="tab" data-tab="exchange">أسعار الصرف</button>
                     <button class="tab" data-tab="storage">إعدادات التخزين</button>
                 </div>
                 
@@ -1334,9 +1559,10 @@
                     <div class="add-product-form" id="add-product-form">
                         <h3 class="section-title">
                             <i class="fas fa-plus-circle"></i>
-                            <span>إضافة منتج جديد</span>
+                            <span id="form-title">إضافة منتج جديد</span>
                         </h3>
                         <form id="product-form">
+                            <input type="hidden" id="edit-product-id">
                             <div class="form-group">
                                 <label for="product-name">اسم المنتج</label>
                                 <input type="text" id="product-name" required placeholder="أدخل اسم المنتج">
@@ -1346,7 +1572,7 @@
                                 <textarea id="product-description" required placeholder="أدخل وصف المنتج"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="product-price">سعر المنتج (ر.س)</label>
+                                <label for="product-price">سعر المنتج (ليرة تركية)</label>
                                 <input type="number" id="product-price" required placeholder="أدخل سعر المنتج" min="0" step="0.01">
                             </div>
                             <div class="form-group">
@@ -1362,13 +1588,18 @@
                                     <input type="file" id="product-image" accept="image/*">
                                     <div class="file-upload-label">
                                         <i class="fas fa-cloud-upload-alt"></i>
-                                        <span>اختر صورة للمنتج</span>
+                                        <span id="file-label">اختر صورة للمنتج</span>
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="submit-product">
-                                <i class="fas fa-save"></i> حفظ المنتج
-                            </button>
+                            <div class="form-actions">
+                                <button type="submit" class="submit-product">
+                                    <i class="fas fa-save"></i> <span id="submit-text">حفظ المنتج</span>
+                                </button>
+                                <button type="button" class="btn btn-outline" id="cancel-edit" style="display: none;">
+                                    <i class="fas fa-times"></i> إلغاء التعديل
+                                </button>
+                            </div>
                         </form>
                     </div>
                     
@@ -1435,6 +1666,72 @@
                     </div>
                 </div>
                 
+                <!-- تبويب أسعار الصرف -->
+                <div class="tab-content" id="exchange-tab">
+                    <div class="exchange-management">
+                        <h3 class="section-title">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>إدارة أسعار الصرف</span>
+                        </h3>
+                        
+                        <div class="exchange-rates-container">
+                            <div class="exchange-rate-card">
+                                <div class="rate-header">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <h4>الليرة التركية (TRY)</h4>
+                                </div>
+                                <div class="rate-info">
+                                    <p>العملة الأساسية</p>
+                                    <div class="rate-value">1.00</div>
+                                </div>
+                            </div>
+                            
+                            <div class="exchange-rate-card">
+                                <div class="rate-header">
+                                    <i class="fas fa-coins"></i>
+                                    <h4>الليرة السورية (SYP)</h4>
+                                </div>
+                                <div class="rate-info">
+                                    <p>سعر الصرف مقابل الليرة التركية</p>
+                                    <div class="rate-controls">
+                                        <input type="number" id="syp-rate" value="18.0" step="0.1" min="0" class="rate-input">
+                                        <span>ليرة تركية = 1 ليرة سورية</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="exchange-rate-card">
+                                <div class="rate-header">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <h4>الدولار الأمريكي (USD)</h4>
+                                </div>
+                                <div class="rate-info">
+                                    <p>سعر الصرف مقابل الليرة التركية</p>
+                                    <div class="rate-controls">
+                                        <input type="number" id="usd-rate" value="0.032" step="0.001" min="0" class="rate-input">
+                                        <span>ليرة تركية = 1 دولار</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="exchange-actions">
+                            <button class="btn btn-primary" id="save-rates">
+                                <i class="fas fa-save"></i> حفظ أسعار الصرف
+                            </button>
+                        </div>
+                        
+                        <div class="exchange-info">
+                            <h4>معلومات مهمة:</h4>
+                            <ul>
+                                <li>أسعار الصرف تحدد قيمة العملات مقابل الليرة التركية</li>
+                                <li>يمكنك تعديل الأسعار يدوياً حسب احتياجاتك</li>
+                                <li>التغييرات تؤثر على جميع الأسعار المعروضة</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- تبويب التخزين -->
                 <div class="tab-content" id="storage-tab">
                     <div class="storage-actions">
@@ -1483,7 +1780,7 @@
         <div class="cart-footer">
             <div class="cart-total">
                 <span>المجموع:</span>
-                <span id="cart-total">0.00 ر.س</span>
+                <span id="cart-total">0.00 ليرة تركية</span>
             </div>
             <button class="checkout-btn" id="checkout-btn">
                 <i class="fab fa-whatsapp"></i> طلب عبر واتساب
@@ -1522,11 +1819,18 @@
 
     <script>
 // ==================== تكوين Supabase ====================
-const SUPABASE_URL = 'https://lxlkziwwxyxhhubtqxhm.supabase.co'; // استبدل برابط مشروعك
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4bGt6aXd3eHl4aGh1YnRxeGhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNzM5ODYsImV4cCI6MjA3NDc0OTk4Nn0.Y08KY3ZX3f7UjkE3nuvnNmDXS3mUWO-T5mbMAidLiCA'; // استبدل بمفتاحك
+const SUPABASE_URL = 'https://lxlkziwwxyxhhubtqxhm.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4bGt6aXd3eHl4aGh1YnRxeGhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkxNzM5ODYsImV4cCI6MjA3NDc0OTk4Nn0.Y08KY3ZX3f7UjkE3nuvnNmDXS3mUWO-T5mbMAidLiCA';
 
 // تهيئة Supabase
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// أسعار الصرف (يمكن تحديثها يدوياً)
+let exchangeRates = {
+    TRY: { rate: 1, symbol: 'ليرة تركية' },
+    SYP: { rate: 18, symbol: 'ليرة سورية' },
+    USD: { rate: 0.032, symbol: 'دولار' }
+};
 
 // ==================== إدارة البيانات مع Supabase ====================
 class SupabaseDataManager {
@@ -1621,21 +1925,21 @@ class SupabaseDataManager {
             {
                 name: "تفاح أحمر",
                 description: "تفاح طازج ومقرمش، مثالي للوجبات الخفيفة الصحية",
-                price: 15.00,
+                price: 45.00,
                 category: "فواكه",
                 image: "🍎"
             },
             {
                 name: "موز",
                 description: "موز ناضج وحلو، غني بالبوتاسيوم والطاقة",
-                price: 12.00,
+                price: 35.00,
                 category: "فواكه", 
                 image: "🍌"
             },
             {
                 name: "جزر طازج",
                 description: "جزر مقرمش وغني بالفيتامينات، مثالي للسلطات والطبخ",
-                price: 8.00,
+                price: 25.00,
                 category: "خضروات",
                 image: "🥕"
             }
@@ -1662,6 +1966,29 @@ class SupabaseDataManager {
             return data[0];
         } catch (error) {
             console.error('❌ خطأ في إضافة المنتج:', error);
+            throw error;
+        }
+    }
+
+    async updateProduct(productId, productData) {
+        try {
+            const { data, error } = await supabase
+                .from('products')
+                .update(productData)
+                .eq('id', productId)
+                .select();
+            
+            if (error) throw error;
+            
+            // تحديث المنتج في المصفوفة المحلية
+            const index = this.products.findIndex(p => p.id === productId);
+            if (index !== -1) {
+                this.products[index] = { ...this.products[index], ...productData };
+            }
+            
+            return data[0];
+        } catch (error) {
+            console.error('❌ خطأ في تحديث المنتج:', error);
             throw error;
         }
     }
@@ -1742,7 +2069,11 @@ class MarketApp {
     constructor() {
         this.dataManager = new SupabaseDataManager();
         this.isAdmin = localStorage.getItem('marketAdminLoggedIn') === 'true';
+        this.currentCurrency = localStorage.getItem('marketCurrency') || 'TRY';
         this.currentCategory = 'الكل';
+        this.userLocation = null;
+        this.isEditing = false;
+        this.currentEditId = null;
         this.init();
     }
 
@@ -1752,8 +2083,10 @@ class MarketApp {
         this.displayProducts();
         this.displayCategories();
         this.updateCart();
-        this.updateStorageStatus();
+        this.updateCurrencySelector();
+        this.getUserLocation();
         this.updateUI();
+        this.loadExchangeRates();
         
         // الاشتراك في التحديثات الفورية
         this.subscribeToRealtimeUpdates();
@@ -1769,6 +2102,7 @@ class MarketApp {
                     console.log('🔄 تم تحديث المنتجات:', payload);
                     await this.dataManager.loadData();
                     this.displayProducts();
+                    this.updateAdminProductsTable();
                 }
             )
             .subscribe();
@@ -1782,6 +2116,8 @@ class MarketApp {
                     console.log('🔄 تم تحديث الفئات:', payload);
                     await this.dataManager.loadData();
                     this.displayCategories();
+                    this.updateCategoriesList();
+                    this.updateProductCategoryOptions();
                 }
             )
             .subscribe();
@@ -1794,6 +2130,7 @@ class MarketApp {
         document.getElementById('add-product-btn').addEventListener('click', () => this.toggleProductForm());
         document.getElementById('product-form').addEventListener('submit', (e) => this.handleAddProduct(e));
         document.getElementById('category-form').addEventListener('submit', (e) => this.handleAddCategory(e));
+        document.getElementById('cancel-edit').addEventListener('click', () => this.cancelEdit());
 
         // أحداث التبويبات
         document.querySelectorAll('.tab').forEach(tab => {
@@ -1805,12 +2142,14 @@ class MarketApp {
         document.getElementById('reset-data').addEventListener('click', () => this.resetData());
         document.getElementById('import-data').addEventListener('change', (e) => this.importData(e));
 
+        // أحداث العملة
+        document.getElementById('currency-select').addEventListener('change', (e) => this.changeCurrency(e.target.value));
+
         // أحداث السلة
         document.getElementById('cart-icon').addEventListener('click', () => this.openCart());
         document.getElementById('close-cart').addEventListener('click', () => this.closeCart());
         document.getElementById('overlay').addEventListener('click', () => this.closeCart());
         document.getElementById('checkout-btn').addEventListener('click', () => this.checkoutViaWhatsApp());
-        document.getElementById('whatsapp-btn').addEventListener('click', (e) => this.openWhatsApp(e));
 
         // أحداث البحث
         document.getElementById('search-input').addEventListener('input', () => this.searchProducts());
@@ -1846,6 +2185,12 @@ class MarketApp {
                 this.hideLoginModal();
             }
         });
+        
+        // أحداث واتساب
+        document.getElementById('whatsapp-btn').addEventListener('click', (e) => this.openWhatsApp(e));
+
+        // أحداث أسعار الصرف
+        document.getElementById('save-rates').addEventListener('click', () => this.saveExchangeRates());
     }
 
     // تحديث واجهة المستخدم
@@ -1900,6 +2245,9 @@ class MarketApp {
     createProductCard(product) {
         const card = document.createElement('div');
         card.className = 'product-card fade-in';
+        
+        const convertedPrice = this.convertPrice(product.price);
+        
         card.innerHTML = `
             <div class="product-badge">جديد</div>
             <div class="product-image">
@@ -1911,7 +2259,7 @@ class MarketApp {
             <div class="product-info">
                 <div class="product-name">${product.name}</div>
                 <div class="product-description">${product.description}</div>
-                <div class="product-price">${product.price.toFixed(2)} ر.س</div>
+                <div class="product-price">${convertedPrice} ${exchangeRates[this.currentCurrency].symbol}</div>
                 <button class="add-to-cart" data-id="${product.id}">
                     <i class="fas fa-cart-plus"></i> إضافة إلى السلة
                 </button>
@@ -2030,15 +2378,25 @@ class MarketApp {
                 </td>
                 <td>${product.name}</td>
                 <td>${product.description.length > 50 ? product.description.substring(0, 50) + '...' : product.description}</td>
-                <td>${product.price.toFixed(2)} ر.س</td>
+                <td>${product.price.toFixed(2)} ليرة تركية</td>
                 <td>${product.category}</td>
                 <td>
+                    <button class="action-btn edit-btn" data-id="${product.id}">
+                        <i class="fas fa-edit"></i> تعديل
+                    </button>
                     <button class="action-btn delete-btn" data-id="${product.id}">
                         <i class="fas fa-trash"></i> حذف
                     </button>
                 </td>
             `;
             tbody.appendChild(row);
+        });
+
+        tbody.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const productId = parseInt(e.target.closest('.edit-btn').dataset.id);
+                this.editProduct(productId);
+            });
         });
 
         tbody.querySelectorAll('.delete-btn').forEach(btn => {
@@ -2049,11 +2407,52 @@ class MarketApp {
         });
     }
 
-    // إضافة منتج جديد
+    // تعديل منتج
+    editProduct(productId) {
+        const product = this.dataManager.products.find(p => p.id === productId);
+        if (!product) return;
+
+        this.isEditing = true;
+        this.currentEditId = productId;
+
+        // تعبئة النموذج ببيانات المنتج
+        document.getElementById('edit-product-id').value = productId;
+        document.getElementById('product-name').value = product.name;
+        document.getElementById('product-description').value = product.description;
+        document.getElementById('product-price').value = product.price;
+        document.getElementById('product-category').value = product.category;
+
+        // تحديث واجهة النموذج
+        document.getElementById('form-title').textContent = 'تعديل المنتج';
+        document.getElementById('submit-text').textContent = 'تحديث المنتج';
+        document.getElementById('cancel-edit').style.display = 'block';
+
+        // إظهار النموذج
+        document.getElementById('add-product-form').style.display = 'block';
+        document.getElementById('add-product-form').scrollIntoView({ behavior: 'smooth' });
+
+        this.showAlert('يمكنك الآن تعديل بيانات المنتج', 'success');
+    }
+
+    // إلغاء التعديل
+    cancelEdit() {
+        this.isEditing = false;
+        this.currentEditId = null;
+        
+        // إعادة تعيين النموذج
+        document.getElementById('product-form').reset();
+        document.getElementById('form-title').textContent = 'إضافة منتج جديد';
+        document.getElementById('submit-text').textContent = 'حفظ المنتج';
+        document.getElementById('cancel-edit').style.display = 'none';
+        
+        this.showAlert('تم إلغاء التعديل', 'warning');
+    }
+
+    // إضافة/تعديل منتج جديد
     async handleAddProduct(e) {
         e.preventDefault();
         
-        const product = {
+        const productData = {
             name: document.getElementById('product-name').value.trim(),
             description: document.getElementById('product-description').value.trim(),
             price: parseFloat(document.getElementById('product-price').value),
@@ -2061,7 +2460,7 @@ class MarketApp {
             image: "🛒"
         };
 
-        if (!product.name || !product.description || !product.price || !product.category) {
+        if (!productData.name || !productData.description || !productData.price || !productData.category) {
             this.showAlert('يرجى ملء جميع الحقول المطلوبة', 'error');
             return;
         }
@@ -2086,7 +2485,7 @@ class MarketApp {
                     .from('product-images')
                     .getPublicUrl(filePath);
 
-                product.image_url = publicUrl;
+                productData.image_url = publicUrl;
             } catch (error) {
                 console.error('❌ خطأ في رفع الصورة:', error);
                 this.showAlert('خطأ في رفع الصورة', 'error');
@@ -2095,12 +2494,21 @@ class MarketApp {
         }
 
         try {
-            await this.dataManager.addProduct(product);
+            if (this.isEditing && this.currentEditId) {
+                // تحديث المنتج الموجود
+                await this.dataManager.updateProduct(this.currentEditId, productData);
+                this.showAlert('تم تحديث المنتج بنجاح!', 'success');
+            } else {
+                // إضافة منتج جديد
+                await this.dataManager.addProduct(productData);
+                this.showAlert('تم إضافة المنتج بنجاح!', 'success');
+            }
+            
             this.displayProducts();
             this.toggleProductForm();
-            this.showAlert('تم إضافة المنتج بنجاح!', 'success');
+            this.cancelEdit(); // إعادة تعيين حالة التعديل
         } catch (error) {
-            this.showAlert('خطأ في إضافة المنتج', 'error');
+            this.showAlert('خطأ في حفظ المنتج', 'error');
         }
     }
 
@@ -2162,6 +2570,46 @@ class MarketApp {
         
         document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
         document.getElementById(`${tabName}-tab`).classList.add('active');
+    }
+
+    // إدارة أسعار الصرف
+    loadExchangeRates() {
+        const savedRates = JSON.parse(localStorage.getItem('marketExchangeRates'));
+        if (savedRates) {
+            exchangeRates.SYP.rate = savedRates.SYP;
+            exchangeRates.USD.rate = savedRates.USD;
+        }
+        
+        // تحديث واجهة المستخدم
+        this.updateExchangeRateUI();
+    }
+
+    updateExchangeRateUI() {
+        document.getElementById('syp-rate').value = exchangeRates.SYP.rate;
+        document.getElementById('usd-rate').value = exchangeRates.USD.rate;
+    }
+
+    saveExchangeRates() {
+        const sypRate = parseFloat(document.getElementById('syp-rate').value);
+        const usdRate = parseFloat(document.getElementById('usd-rate').value);
+        
+        if (isNaN(sypRate) || isNaN(usdRate) || sypRate <= 0 || usdRate <= 0) {
+            this.showAlert('يرجى إدخال قيم صحيحة لأسعار الصرف', 'error');
+            return;
+        }
+        
+        exchangeRates.SYP.rate = sypRate;
+        exchangeRates.USD.rate = usdRate;
+        
+        // حفظ في localStorage
+        localStorage.setItem('marketExchangeRates', JSON.stringify({
+            SYP: sypRate,
+            USD: usdRate
+        }));
+        
+        this.showAlert('تم حفظ أسعار الصرف بنجاح', 'success');
+        this.displayProducts();
+        this.updateCart();
     }
 
     // إدارة التخزين
@@ -2301,6 +2749,9 @@ class MarketApp {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
                 
+                const convertedPrice = this.convertPrice(item.price);
+                const convertedTotal = this.convertPrice(itemTotal);
+                
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
@@ -2312,7 +2763,7 @@ class MarketApp {
                     </div>
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">${item.price.toFixed(2)} ر.س</div>
+                        <div class="cart-item-price">${convertedPrice} ${exchangeRates[this.currentCurrency].symbol}</div>
                         <div class="cart-item-quantity">
                             <button class="quantity-btn decrease" data-id="${item.id}">-</button>
                             <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
@@ -2329,20 +2780,21 @@ class MarketApp {
             this.setupCartEventListeners();
         }
         
-        cartTotal.textContent = `${total.toFixed(2)} ر.س`;
+        const convertedTotal = this.convertPrice(total);
+        cartTotal.textContent = `${convertedTotal} ${exchangeRates[this.currentCurrency].symbol}`;
     }
 
     setupCartEventListeners() {
         document.querySelectorAll('.decrease').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const id = parseInt(e.target.dataset.id);
+                const id = parseInt(e.target.closest('.decrease').dataset.id);
                 this.updateQuantity(id, -1);
             });
         });
         
         document.querySelectorAll('.increase').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const id = parseInt(e.target.dataset.id);
+                const id = parseInt(e.target.closest('.increase').dataset.id);
                 this.updateQuantity(id, 1);
             });
         });
@@ -2361,7 +2813,7 @@ class MarketApp {
         
         document.querySelectorAll('.remove-item').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const id = parseInt(e.target.dataset.id);
+                const id = parseInt(e.target.closest('.remove-item').dataset.id);
                 this.removeFromCart(id);
             });
         });
@@ -2409,6 +2861,28 @@ class MarketApp {
         document.body.style.overflow = 'auto';
     }
 
+    // الحصول على موقع المستخدم الجغرافي
+    getUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    this.userLocation = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    console.log('📍 موقع المستخدم:', this.userLocation);
+                },
+                (error) => {
+                    console.log('❌ تعذر الحصول على الموقع:', error);
+                    this.userLocation = null;
+                }
+            );
+        } else {
+            console.log('❌ المتصفح لا يدعم خدمة الموقع');
+            this.userLocation = null;
+        }
+    }
+
     // الطلب عبر واتساب
     checkoutViaWhatsApp() {
         if (this.dataManager.cart.length === 0) {
@@ -2416,32 +2890,77 @@ class MarketApp {
             return;
         }
         
-        let orderText = "مرحباً، أريد طلب المنتجات التالية:\n\n";
+        // إظهار تنبيه التوصيل
+        this.showDeliveryAlert();
+        
+        let orderText = "مرحباً، أريد طلب المنتجات التالية من ماركتنا:\n\n";
         
         this.dataManager.cart.forEach(item => {
-            orderText += `- ${item.name} (${item.quantity} × ${item.price.toFixed(2)} ر.س)\n`;
+            const convertedPrice = this.convertPrice(item.price);
+            orderText += `- ${item.name} (${item.quantity} × ${convertedPrice} ${exchangeRates[this.currentCurrency].symbol})\n`;
         });
         
         const total = this.dataManager.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        orderText += `\nالمجموع: ${total.toFixed(2)} ر.س\n\n`;
+        const convertedTotal = this.convertPrice(total);
+        orderText += `\nالمجموع: ${convertedTotal} ${exchangeRates[this.currentCurrency].symbol}\n\n`;
+        
+        // إضافة رابط الموقع الجغرافي إذا كان متاحاً
+        if (this.userLocation) {
+            const mapsUrl = `https://maps.google.com/?q=${this.userLocation.latitude},${this.userLocation.longitude}`;
+            orderText += `موقعي الجغرافي: ${mapsUrl}\n\n`;
+        }
+        
         orderText += "شكراً لكم!";
         
         const encodedText = encodeURIComponent(orderText);
-        const phoneNumber = "966123456789"; // استبدل برقم الهاتف الفعلي
+        const phoneNumber = "1234567890"; // استبدل برقم الهاتف الفعلي
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
         
         window.open(whatsappUrl, '_blank');
         this.closeCart();
     }
 
+    // إظهار تنبيه التوصيل
+    showDeliveryAlert() {
+        const alertMessage = "⚠️ نود أن نعلمك أننا نقوم بالتوصيل فقط داخل مدينة معرة النعمان. إذا كنت خارج المدينة، يرجى الترتيب لاستلام الطلب بنفسك.";
+        this.showAlert(alertMessage, 'error');
+        
+        // إظهار تنبيه تأكيدي
+        setTimeout(() => {
+            if (confirm("هل أنت متأكد أنك تقيم في معرة النعمان؟")) {
+                // متابعة الطلب
+            } else {
+                this.showAlert("يمكنك التواصل معنا لترتيب استلام الطلب", 'warning');
+            }
+        }, 1000);
+    }
+
     openWhatsApp(e) {
         e.preventDefault();
-        const phoneNumber = "966123456789"; // استبدل برقم الهاتف الفعلي
-        const message = "مرحباً، أريد الاستفسار عن المنتجات المتوفرة";
+        const phoneNumber = "1234567890"; // استبدل برقم الهاتف الفعلي
+        const message = "مرحباً، أريد الاستفسار عن المنتجات المتوفرة في ماركتنا";
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         
         window.open(whatsappUrl, '_blank');
+    }
+
+    // إدارة العملات
+    changeCurrency(currency) {
+        this.currentCurrency = currency;
+        localStorage.setItem('marketCurrency', currency);
+        this.displayProducts();
+        this.updateCart();
+        this.updateCurrencySelector();
+    }
+
+    convertPrice(price) {
+        const converted = price * exchangeRates[this.currentCurrency].rate;
+        return converted.toFixed(2);
+    }
+
+    updateCurrencySelector() {
+        document.getElementById('currency-select').value = this.currentCurrency;
     }
 
     // البحث في المنتجات
@@ -2562,7 +3081,7 @@ class MarketApp {
         
         setTimeout(() => {
             alert.style.display = 'none';
-        }, 4000);
+        }, 5000);
     }
 }
 
