@@ -3427,7 +3427,7 @@ class MarketApp {
         orderText += "شكراً لكم!";
         
         const encodedText = encodeURIComponent(orderText);
-        const phoneNumber = "1234567890"; // استبدل برقم الهاتف الفعلي
+        const phoneNumber = "+963956604862"; // استبدل برقم الهاتف الفعلي
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
         
         window.open(whatsappUrl, '_blank');
@@ -3451,7 +3451,7 @@ class MarketApp {
 
     openWhatsApp(e) {
         e.preventDefault();
-        const phoneNumber = "1234567890"; // استبدل برقم الهاتف الفعلي
+        const phoneNumber = "+963956604862"; // استبدل برقم الهاتف الفعلي
         const message = "مرحباً، أريد الاستفسار عن المنتجات المتوفرة في ماركتنا";
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
