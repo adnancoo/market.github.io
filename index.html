@@ -44,7 +44,7 @@
             font-size: 14px;
         }
 
-        /* رأس الصفحة */
+        /* رأس الصفحة - إصلاح كامل للجوال */
         header {
             background: var(--white);
             color: var(--text);
@@ -189,7 +189,7 @@
             font-weight: bold;
         }
 
-        /* قسم التنقل */
+        /* قسم التنقل - إصلاح للجوال */
         nav {
             background: var(--white);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -312,7 +312,7 @@
             transform: translateY(-2px);
         }
 
-        /* المحتوى الرئيسي */
+        /* المحتوى الرئيسي - إصلاح للجوال */
         main {
             max-width: 1400px;
             margin: 1rem auto;
@@ -399,7 +399,7 @@
             border-radius: 2px;
         }
 
-        /* عرض المنتجات */
+        /* عرض المنتجات - إصلاح للجوال */
         .categories {
             display: flex;
             gap: 0.5rem;
@@ -557,7 +557,7 @@
             box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
 
-        /* سلة التسوق */
+        /* سلة التسوق - إصلاح للجوال */
         .cart-sidebar {
             position: fixed;
             top: 0;
@@ -715,111 +715,6 @@
             font-size: 1.1rem;
         }
 
-        /* نظام الدفع الجديد */
-        .payment-methods {
-            margin: 1rem 0;
-            border: 2px solid var(--gray);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .payment-method {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray);
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .payment-method:last-child {
-            border-bottom: none;
-        }
-        
-        .payment-method:hover {
-            background: var(--light);
-        }
-        
-        .payment-method.active {
-            background: var(--primary-light);
-            color: var(--white);
-        }
-        
-        .payment-method i {
-            font-size: 1.5rem;
-            width: 30px;
-        }
-        
-        .payment-details {
-            padding: 1rem;
-            background: var(--light);
-            border-radius: 8px;
-            margin-top: 1rem;
-            display: none;
-        }
-        
-        .payment-details.active {
-            display: block;
-            animation: fadeIn 0.3s ease-in;
-        }
-        
-        .sham-code {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            margin: 1rem 0;
-            border: 2px dashed var(--primary);
-        }
-        
-        .sham-code-number {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 1rem 0;
-            direction: ltr;
-            letter-spacing: 2px;
-        }
-        
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            margin: 1rem auto;
-            background: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            border: 1px solid var(--gray);
-        }
-        
-        .qr-code img {
-            max-width: 100%;
-            max-height: 100%;
-        }
-        
-        .payment-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .payment-actions .btn {
-            flex: 1;
-            min-width: 120px;
-        }
-        
-        .whatsapp-notification {
-            background: #25D366;
-            color: white;
-        }
-        
-        .whatsapp-notification:hover {
-            background: #128C7E;
-        }
-
         .checkout-btn {
             background: var(--primary);
             color: var(--white);
@@ -886,7 +781,7 @@
             background: var(--light);
         }
 
-        /* التصميم المتجاوب */
+        /* التصميم المتجاوب - تحسينات إضافية */
         @media (max-width: 480px) {
             body {
                 font-size: 13px;
@@ -1025,32 +920,6 @@
                 font-size: 1.2rem;
                 bottom: 0.8rem;
                 left: 0.8rem;
-            }
-            
-            /* تحسينات نظام الدفع للجوال */
-            .payment-method {
-                padding: 0.8rem;
-            }
-            
-            .payment-method i {
-                font-size: 1.3rem;
-            }
-            
-            .sham-code {
-                padding: 1rem;
-            }
-            
-            .sham-code-number {
-                font-size: 1.5rem;
-            }
-            
-            .qr-code {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .payment-actions {
-                flex-direction: column;
             }
         }
 
@@ -1989,7 +1858,6 @@
                     <button class="tab" data-tab="categories">إدارة الفئات</button>
                     <button class="tab" data-tab="exchange">أسعار الصرف</button>
                     <button class="tab" data-tab="storage">إعدادات التخزين</button>
-                    <button class="tab" data-tab="admin-settings">إعدادات المسؤول</button>
                 </div>
                 
                 <!-- تبويب المنتجات -->
@@ -2108,92 +1976,93 @@
                     </div>
                 </div>
                 
-                <!-- تبويب أسعار الصرف -->
-                <div class="tab-content" id="exchange-tab">
-                    <div class="exchange-management">
-                        <h3 class="section-title">
-                            <i class="fas fa-exchange-alt"></i>
-                            <span>إدارة أسعار الصرف</span>
-                        </h3>
-                        
-                        <div class="exchange-rates-container">
-                            <div class="exchange-rate-card">
-                                <div class="rate-header">
-                                    <i class="fas fa-money-bill-wave"></i>
-                                    <h4>الليرة التركية (TRY)</h4>
-                                </div>
-                                <div class="rate-info">
-                                    <p>العملة الأساسية</p>
-                                    <div class="rate-value">1.00</div>
-                                </div>
-                            </div>
-                            
-                            <div class="exchange-rate-card">
-                                <div class="rate-header">
-                                    <i class="fas fa-coins"></i>
-                                    <h4>الليرة السورية (SYP)</h4>
-                                </div>
-                                <div class="rate-info">
-                                    <p>سعر الصرف مقابل الليرة التركية</p>
-                                    <div class="rate-controls">
-                                        <input type="number" id="syp-rate" value="18.0" step="0.1" min="0.1" class="rate-input">
-                                        <span>1 ليرة تركية = <span id="syp-display">18.0</span> ليرة سورية</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="exchange-rate-card">
-                                <div class="rate-header">
-                                    <i class="fas fa-dollar-sign"></i>
-                                    <h4>الدولار الأمريكي (USD)</h4>
-                                </div>
-                                <div class="rate-info">
-                                    <p>سعر الصرف مقابل الليرة التركية</p>
-                                    <div class="rate-controls">
-                                        <input type="number" id="usd-rate" value="0.032" step="0.001" min="0.001" class="rate-input">
-                                        <span>1 دولار = <span id="usd-display">31.25</span> ليرة تركية</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="exchange-actions">
-                            <button class="btn btn-primary" id="save-rates">
-                                <i class="fas fa-save"></i> حفظ أسعار الصرف
-                            </button>
-                            <button class="btn btn-outline" id="test-rates">
-                                <i class="fas fa-calculator"></i> اختبار التحويل
-                            </button>
-                        </div>
-                        
-                        <!-- قسم اختبار التحويل -->
-                        <div class="exchange-test" id="exchange-test" style="display: none; margin-top: 2rem; padding: 1.5rem; background: var(--light); border-radius: 12px;">
-                            <h4 style="margin-bottom: 1rem; color: var(--primary);">اختبار التحويل:</h4>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                                <div>
-                                    <label>سعر اختباري (ليرة تركية):</label>
-                                    <input type="number" id="test-price" value="100" class="rate-input" style="width: 100%;">
-                                </div>
-                                <div>
-                                    <label>النتيجة:</label>
-                                    <div id="test-result" style="padding: 0.8rem; background: var(--white); border-radius: 8px; font-weight: bold; text-align: center;">
-                                        100 ليرة تركية = 1800 ليرة سورية = 3.2 دولار
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="exchange-info">
-                            <h4>معلومات مهمة:</h4>
-                            <ul>
-                                <li>أسعار الصرف تحدد قيمة العملات مقابل الليرة التركية</li>
-                                <li>يمكنك تعديل الأسعار يدوياً حسب احتياجاتك</li>
-                                <li>التغييرات تؤثر على جميع الأسعار المعروضة</li>
-                                <li>يتم الحفظ تلقائياً في قاعدة البيانات</li>
-                            </ul>
-                        </div>
+               <!-- تبويب أسعار الصرف - إصلاح الواجهة -->
+<div class="tab-content" id="exchange-tab">
+    <div class="exchange-management">
+        <h3 class="section-title">
+            <i class="fas fa-exchange-alt"></i>
+            <span>إدارة أسعار الصرف</span>
+        </h3>
+        
+        <div class="exchange-rates-container">
+            <div class="exchange-rate-card">
+                <div class="rate-header">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h4>الليرة التركية (TRY)</h4>
+                </div>
+                <div class="rate-info">
+                    <p>العملة الأساسية</p>
+                    <div class="rate-value">1.00</div>
+                </div>
+            </div>
+            
+            <div class="exchange-rate-card">
+                <div class="rate-header">
+                    <i class="fas fa-coins"></i>
+                    <h4>الليرة السورية (SYP)</h4>
+                </div>
+                <div class="rate-info">
+                    <p>سعر الصرف مقابل الليرة التركية</p>
+                    <div class="rate-controls">
+                        <input type="number" id="syp-rate" value="18.0" step="0.1" min="0.1" class="rate-input">
+                        <span>1 ليرة تركية = <span id="syp-display">18.0</span> ليرة سورية</span>
                     </div>
                 </div>
+            </div>
+            
+            <div class="exchange-rate-card">
+                <div class="rate-header">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h4>الدولار الأمريكي (USD)</h4>
+                </div>
+                <div class="rate-info">
+                    <p>سعر الصرف مقابل الليرة التركية</p>
+                    <div class="rate-controls">
+                        <input type="number" id="usd-rate" value="0.032" step="0.001" min="0.001" class="rate-input">
+                        <span>1 دولار = <span id="usd-display">31.25</span> ليرة تركية</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exchange-actions">
+            <button class="btn btn-primary" id="save-rates">
+                <i class="fas fa-save"></i> حفظ أسعار الصرف
+            </button>
+            <button class="btn btn-outline" id="test-rates">
+                <i class="fas fa-calculator"></i> اختبار التحويل
+            </button>
+        </div>
+        
+        <!-- قسم اختبار التحويل -->
+        <div class="exchange-test" id="exchange-test" style="display: none; margin-top: 2rem; padding: 1.5rem; background: var(--light); border-radius: 12px;">
+            <h4 style="margin-bottom: 1rem; color: var(--primary);">اختبار التحويل:</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                    <label>سعر اختباري (ليرة تركية):</label>
+                    <input type="number" id="test-price" value="100" class="rate-input" style="width: 100%;">
+                </div>
+                <div>
+                    <label>النتيجة:</label>
+                    <div id="test-result" style="padding: 0.8rem; background: var(--white); border-radius: 8px; font-weight: bold; text-align: center;">
+                        100 ليرة تركية = 1800 ليرة سورية = 3.2 دولار
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exchange-info">
+            <h4>معلومات مهمة:</h4>
+            <ul>
+                <li>أسعار الصرف تحدد قيمة العملات مقابل الليرة التركية</li>
+                <li>يمكنك تعديل الأسعار يدوياً حسب احتياجاتك</li>
+                <li>التغييرات تؤثر على جميع الأسعار المعروضة</li>
+                <li>يتم الحفظ تلقائياً في قاعدة البيانات</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
                 
                 <!-- تبويب التخزين -->
                 <div class="tab-content" id="storage-tab">
@@ -2225,50 +2094,11 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- تبويب إعدادات المسؤول -->
-                <div class="tab-content" id="admin-settings-tab">
-                    <div class="admin-settings">
-                        <h3 class="section-title">
-                            <i class="fas fa-user-shield"></i>
-                            <span>إعدادات المسؤول</span>
-                        </h3>
-                        
-                        <div class="form-group">
-                            <label>اسم المستخدم الحالي:</label>
-                            <input type="text" id="admin-username-display" readonly class="form-control" value="admin">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="new-admin-password">كلمة المرور الجديدة:</label>
-                            <input type="password" id="new-admin-password" class="form-control" placeholder="أدخل كلمة المرور الجديدة">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="confirm-admin-password">تأكيد كلمة المرور الجديدة:</label>
-                            <input type="password" id="confirm-admin-password" class="form-control" placeholder="أكد كلمة المرور الجديدة">
-                        </div>
-                        
-                        <button class="btn btn-primary" id="update-admin-password">
-                            <i class="fas fa-key"></i> تحديث كلمة المرور
-                        </button>
-                        
-                        <div class="exchange-info" style="margin-top: 2rem;">
-                            <h4>معلومات الأمان:</h4>
-                            <ul>
-                                <li>يتم تخزين بيانات المسؤول بشكل آمن في قاعدة البيانات</li>
-                                <li>يجب استخدام كلمة مرور قوية تحتوي على أحرف وأرقام ورموز</li>
-                                <li>يجب تغيير كلمة المرور بشكل دوري للأمان</li>
-                                <li>لا تشارك بيانات الدخول مع أي شخص</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
     </main>
     
-    <!-- سلة التسوق مع تحديث نظام الدفع -->
+    <!-- سلة التسوق -->
     <div class="cart-sidebar" id="cart-sidebar">
         <div class="cart-header">
             <h2><i class="fas fa-shopping-cart"></i> سلة التسوق</h2>
@@ -2284,60 +2114,8 @@
                 <span>المجموع:</span>
                 <span id="cart-total">0.00 ليرة تركية</span>
             </div>
-            
-            <!-- نظام الدفع الجديد -->
-            <div class="payment-methods" id="payment-methods">
-                <div class="payment-method active" data-method="cash">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <div>
-                        <h4>الدفع عند الاستلام</h4>
-                        <p>ادفع نقداً عند استلام الطلب</p>
-                    </div>
-                </div>
-                <div class="payment-method" data-method="sham">
-                    <i class="fas fa-qrcode"></i>
-                    <div>
-                        <h4>شام كاش</h4>
-                        <p>ادفع عبر تطبيق شام كاش</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- تفاصيل الدفع عبر شام كاش -->
-            <div class="payment-details" id="sham-payment-details">
-                <div class="sham-code">
-                    <h4><i class="fas fa-wallet"></i> كود شام كاش</h4>
-                    <div class="sham-code-number" id="sham-code">1234 5678 9012 3456</div>
-                    <p>انسخ الكود أعلاه أو امسح رمز الاستجابة السريع</p>
-                    
-                    <div class="qr-code" id="qr-code">
-                        <!-- سيتم إنشاء QR Code هنا -->
-                        <i class="fas fa-qrcode" style="font-size: 5rem; color: var(--primary);"></i>
-                    </div>
-                    
-                    <div class="payment-actions">
-                        <button class="btn btn-primary" id="copy-sham-code">
-                            <i class="fas fa-copy"></i> نسخ الكود
-                        </button>
-                        <button class="btn btn-outline" id="download-qr">
-                            <i class="fas fa-download"></i> تنزيل QR
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="delivery-alert">
-                    <i class="fas fa-info-circle"></i>
-                    <span>بعد إتمام الدفع، أرسل إشعار الدفع عبر واتساب لإكمال الطلب</span>
-                </div>
-                
-                <button class="btn whatsapp-notification" id="send-payment-notification">
-                    <i class="fab fa-whatsapp"></i> إرسال إشعار الدفع
-                </button>
-            </div>
-            
-            <!-- زر الطلب النهائي -->
             <button class="checkout-btn" id="checkout-btn">
-                <i class="fas fa-shopping-bag"></i> تأكيد الطلب
+                <i class="fab fa-whatsapp"></i> طلب عبر واتساب
             </button>
         </div>
     </div>
@@ -2390,22 +2168,11 @@ class SupabaseDataManager {
             SYP: { rate: 18, symbol: 'ليرة سورية', name: 'الليرة السورية' },
             USD: { rate: 0.032, symbol: 'دولار', name: 'الدولار الأمريكي' }
         };
-        this.adminCredentials = null;
-        this.selectedPaymentMethod = 'cash';
-        this.shamCode = this.generateShamCode();
-    }
-
-    generateShamCode() {
-        // توليد كود شام كاش عشوائي (16 رقم)
-        return Array.from({length: 16}, () => Math.floor(Math.random() * 10)).join('').replace(/(.{4})/g, '$1 ').trim();
     }
 
     async loadData() {
         try {
-            // جلب بيانات المسؤول أولاً
-            await this.loadAdminCredentials();
-            
-            // جلب أسعار الصرف
+            // جلب أسعار الصرف أولاً
             await this.loadExchangeRates();
             
             // جلب المنتجات من Supabase
@@ -2446,70 +2213,6 @@ class SupabaseDataManager {
         }
     }
 
-    async loadAdminCredentials() {
-        try {
-            const { data, error } = await supabase
-                .from('admin_settings')
-                .select('*')
-                .eq('setting_key', 'admin_credentials')
-                .single();
-            
-            if (error && error.code !== 'PGRST116') {
-                console.error('❌ خطأ في جلب بيانات المسؤول:', error);
-                return;
-            }
-            
-            if (data) {
-                this.adminCredentials = JSON.parse(data.setting_value);
-                console.log('✅ تم تحميل بيانات المسؤول من قاعدة البيانات');
-            } else {
-                // إنشاء بيانات افتراضية إذا لم تكن موجودة
-                this.adminCredentials = {
-                    username: 'admin',
-                    password: 'admin123'
-                };
-                await this.saveAdminCredentials();
-                console.log('✅ تم إنشاء بيانات المسؤول الافتراضية');
-            }
-        } catch (error) {
-            console.error('❌ خطأ في تحميل بيانات المسؤول:', error);
-            this.adminCredentials = {
-                username: 'admin',
-                password: 'admin123'
-            };
-        }
-    }
-
-    async saveAdminCredentials() {
-        try {
-            const { error } = await supabase
-                .from('admin_settings')
-                .upsert({
-                    setting_key: 'admin_credentials',
-                    setting_value: JSON.stringify(this.adminCredentials),
-                    updated_at: new Date().toISOString()
-                });
-            
-            if (error) throw error;
-            console.log('✅ تم حفظ بيانات المسؤول في قاعدة البيانات');
-        } catch (error) {
-            console.error('❌ خطأ في حفظ بيانات المسؤول:', error);
-        }
-    }
-
-    async updateAdminPassword(newPassword) {
-        try {
-            this.adminCredentials.password = newPassword;
-            await this.saveAdminCredentials();
-            console.log('✅ تم تحديث كلمة مرور المسؤول');
-            return true;
-        } catch (error) {
-            console.error('❌ خطأ في تحديث كلمة المرور:', error);
-            return false;
-        }
-    }
-
-    // باقي الدوال تبقى كما هي...
     async loadExchangeRates() {
         try {
             const { data, error } = await supabase
@@ -2826,7 +2529,7 @@ class MarketApp {
         this.userLocation = null;
         this.isEditing = false;
         this.currentEditId = null;
-        this.selectedPaymentMethod = 'cash';
+        this.currentAdminUser = null;
         this.init();
     }
 
@@ -2841,7 +2544,6 @@ class MarketApp {
         this.updateUI();
         this.handleMobileResize();
         this.setupExchangeTest();
-        this.setupPaymentMethods();
         
         // الاشتراك في التحديثات الفورية
         this.subscribeToRealtimeUpdates();
@@ -2940,7 +2642,7 @@ class MarketApp {
         document.getElementById('cart-icon').addEventListener('click', () => this.openCart());
         document.getElementById('close-cart').addEventListener('click', () => this.closeCart());
         document.getElementById('overlay').addEventListener('click', () => this.closeCart());
-        document.getElementById('checkout-btn').addEventListener('click', () => this.checkoutOrder());
+        document.getElementById('checkout-btn').addEventListener('click', () => this.checkoutViaWhatsApp());
 
         // أحداث البحث
         document.getElementById('search-input').addEventListener('input', () => this.searchProducts());
@@ -2985,69 +2687,6 @@ class MarketApp {
         document.getElementById('test-rates').addEventListener('click', () => this.testExchangeRates());
         document.getElementById('syp-rate').addEventListener('input', () => this.updateExchangeDisplay());
         document.getElementById('usd-rate').addEventListener('input', () => this.updateExchangeDisplay());
-
-        // أحداث إعدادات المسؤول
-        document.getElementById('update-admin-password').addEventListener('click', () => this.updateAdminPassword());
-    }
-
-    // إعداد نظام الدفع
-    setupPaymentMethods() {
-        const paymentMethods = document.querySelectorAll('.payment-method');
-        
-        paymentMethods.forEach(method => {
-            method.addEventListener('click', () => {
-                // إزالة النشاط من جميع الطرق
-                paymentMethods.forEach(m => m.classList.remove('active'));
-                // إضافة النشاط للطريقة المحددة
-                method.classList.add('active');
-                
-                this.selectedPaymentMethod = method.dataset.method;
-                
-                // إظهار/إخفاء تفاصيل شام كاش
-                const shamDetails = document.getElementById('sham-payment-details');
-                if (this.selectedPaymentMethod === 'sham') {
-                    shamDetails.classList.add('active');
-                    this.updateShamCode();
-                } else {
-                    shamDetails.classList.remove('active');
-                }
-            });
-        });
-
-        // أحداث شام كاش
-        document.getElementById('copy-sham-code').addEventListener('click', () => this.copyShamCode());
-        document.getElementById('download-qr').addEventListener('click', () => this.downloadQRCode());
-        document.getElementById('send-payment-notification').addEventListener('click', () => this.sendPaymentNotification());
-    }
-
-    updateShamCode() {
-        document.getElementById('sham-code').textContent = this.dataManager.shamCode;
-    }
-
-    copyShamCode() {
-        const code = this.dataManager.shamCode.replace(/\s/g, '');
-        navigator.clipboard.writeText(code).then(() => {
-            this.showAlert('تم نسخ كود شام كاش إلى الحافظة', 'success');
-        }).catch(err => {
-            console.error('❌ خطأ في نسخ الكود:', err);
-            this.showAlert('خطأ في نسخ الكود', 'error');
-        });
-    }
-
-    downloadQRCode() {
-        // في التطبيق الحقيقي، يمكنك استخدام مكتبة لإنشاء QR Code
-        // هنا نستخدم صورة افتراضية
-        this.showAlert('سيتم تنزيل صورة QR Code في التطبيق الكامل', 'success');
-    }
-
-    sendPaymentNotification() {
-        const phoneNumber = "1234567890"; // استبدل برقم الهاتف الفعلي
-        const message = `تم الدفع عبر شام كاش\nالكود: ${this.dataManager.shamCode}\nيرجى التحقق من الدفع وإكمال الطلب`;
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-        
-        window.open(whatsappUrl, '_blank');
-        this.showAlert('تم فتح واتساب لإرسال إشعار الدفع', 'success');
     }
 
     // تحديث واجهة المستخدم
@@ -3055,12 +2694,14 @@ class MarketApp {
         const loginBtn = document.getElementById('login-btn');
         const logoutBtn = document.getElementById('logout-btn');
         const userInfo = document.getElementById('user-info');
+        const usernameDisplay = document.getElementById('username-display');
         const adminOnly = document.querySelectorAll('.admin-only');
 
-        if (this.isAdmin) {
+        if (this.isAdmin && this.currentAdminUser) {
             loginBtn.style.display = 'none';
             logoutBtn.style.display = 'flex';
             userInfo.style.display = 'flex';
+            usernameDisplay.textContent = this.currentAdminUser.full_name || this.currentAdminUser.username;
             adminOnly.forEach(el => el.style.display = 'flex');
         } else {
             loginBtn.style.display = 'flex';
@@ -3767,59 +3408,6 @@ class MarketApp {
         document.body.style.overflow = 'auto';
     }
 
-    // تأكيد الطلب مع نظام الدفع المزدوج
-    checkoutOrder() {
-        if (this.dataManager.cart.length === 0) {
-            this.showAlert('السلة فارغة. أضف منتجات أولاً.', 'error');
-            return;
-        }
-        
-        // إظهار تنبيه التوصيل
-        this.showDeliveryAlert();
-        
-        let orderText = "مرحباً، أريد طلب المنتجات التالية من ماركتنا:\n\n";
-        
-        this.dataManager.cart.forEach(item => {
-            const convertedPrice = this.convertPrice(item.price);
-            orderText += `- ${item.name} (${item.quantity} × ${convertedPrice} ${this.dataManager.exchangeRates[this.currentCurrency].symbol})\n`;
-        });
-        
-        const total = this.dataManager.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const convertedTotal = this.convertPrice(total);
-        
-        orderText += `\nالمجموع: ${convertedTotal} ${this.dataManager.exchangeRates[this.currentCurrency].symbol}\n\n`;
-        
-        // إضافة طريقة الدفع
-        if (this.selectedPaymentMethod === 'cash') {
-            orderText += `💵 طريقة الدفع: الدفع عند الاستلام\n\n`;
-        } else {
-            orderText += `📱 طريقة الدفع: شام كاش\n`;
-            orderText += `🔢 كود الشام كاش: ${this.dataManager.shamCode}\n\n`;
-        }
-        
-        // إضافة رابط الموقع الجغرافي إذا كان متاحاً
-        if (this.userLocation) {
-            const mapsUrl = `https://maps.google.com/?q=${this.userLocation.latitude},${this.userLocation.longitude}`;
-            orderText += `📍 موقعي الجغرافي: ${mapsUrl}\n\n`;
-        }
-        
-        orderText += "شكراً لكم!";
-        
-        const encodedText = encodeURIComponent(orderText);
-        const phoneNumber = "1234567890"; // استبدل برقم الهاتف الفعلي
-        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
-        
-        window.open(whatsappUrl, '_blank');
-        this.closeCart();
-        
-        // إعادة تعيين السلة بعد الطلب
-        this.dataManager.cart = [];
-        this.dataManager.updateCart(this.dataManager.cart);
-        this.updateCart();
-        
-        this.showAlert('تم إرسال الطلب عبر واتساب بنجاح!', 'success');
-    }
-
     // الحصول على موقع المستخدم الجغرافي
     getUserLocation() {
         if (navigator.geolocation) {
@@ -3840,6 +3428,43 @@ class MarketApp {
             console.log('❌ المتصفح لا يدعم خدمة الموقع');
             this.userLocation = null;
         }
+    }
+
+    // الطلب عبر واتساب
+    checkoutViaWhatsApp() {
+        if (this.dataManager.cart.length === 0) {
+            this.showAlert('السلة فارغة. أضف منتجات أولاً.', 'error');
+            return;
+        }
+        
+        // إظهار تنبيه التوصيل
+        this.showDeliveryAlert();
+        
+        let orderText = "مرحباً، أريد طلب المنتجات التالية من ماركتنا:\n\n";
+        
+        this.dataManager.cart.forEach(item => {
+            const convertedPrice = this.convertPrice(item.price);
+            orderText += `- ${item.name} (${item.quantity} × ${convertedPrice} ${this.dataManager.exchangeRates[this.currentCurrency].symbol})\n`;
+        });
+        
+        const total = this.dataManager.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const convertedTotal = this.convertPrice(total);
+        orderText += `\nالمجموع: ${convertedTotal} ${this.dataManager.exchangeRates[this.currentCurrency].symbol}\n\n`;
+        
+        // إضافة رابط الموقع الجغرافي إذا كان متاحاً
+        if (this.userLocation) {
+            const mapsUrl = `https://maps.google.com/?q=${this.userLocation.latitude},${this.userLocation.longitude}`;
+            orderText += `موقعي الجغرافي: ${mapsUrl}\n\n`;
+        }
+        
+        orderText += "شكراً لكم!";
+        
+        const encodedText = encodeURIComponent(orderText);
+        const phoneNumber = "1234567890"; // استبدل برقم الهاتف الفعلي
+        const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+        
+        window.open(whatsappUrl, '_blank');
+        this.closeCart();
     }
 
     // إظهار تنبيه التوصيل
@@ -3919,57 +3544,61 @@ class MarketApp {
         const username = document.getElementById('admin-username').value.trim();
         const password = document.getElementById('admin-password').value.trim();
         
-        // استخدام بيانات المسؤول من قاعدة البيانات
-        if (this.dataManager.adminCredentials && 
-            username === this.dataManager.adminCredentials.username && 
-            password === this.dataManager.adminCredentials.password) {
-            this.isAdmin = true;
-            localStorage.setItem('marketAdminLoggedIn', 'true');
-            this.updateUI();
-            this.hideLoginModal();
-            this.showAlert('تم تسجيل الدخول بنجاح!', 'success');
-            this.handleNavigation('admin');
-        } else {
-            document.getElementById('login-error').style.display = 'block';
-        }
-    }
-
-    async updateAdminPassword() {
-        const newPassword = document.getElementById('new-admin-password').value;
-        const confirmPassword = document.getElementById('confirm-admin-password').value;
-        
-        if (!newPassword || !confirmPassword) {
-            this.showAlert('يرجى ملء جميع الحقول', 'error');
-            return;
-        }
-        
-        if (newPassword !== confirmPassword) {
-            this.showAlert('كلمات المرور غير متطابقة', 'error');
-            return;
-        }
-        
-        if (newPassword.length < 6) {
-            this.showAlert('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
-            return;
-        }
-        
         try {
-            const success = await this.dataManager.updateAdminPassword(newPassword);
-            if (success) {
-                this.showAlert('تم تحديث كلمة المرور بنجاح', 'success');
-                document.getElementById('new-admin-password').value = '';
-                document.getElementById('confirm-admin-password').value = '';
-            } else {
-                this.showAlert('خطأ في تحديث كلمة المرور', 'error');
+            // التحقق من بيانات المستخدم في قاعدة البيانات
+            const { data: users, error } = await supabase
+                .from('admin_users')
+                .select('*')
+                .eq('username', username)
+                .eq('is_active', true)
+                .single();
+            
+            if (error) {
+                console.error('❌ خطأ في جلب بيانات المستخدم:', error);
+                document.getElementById('login-error').style.display = 'block';
+                return;
             }
+            
+            if (!users) {
+                document.getElementById('login-error').style.display = 'block';
+                return;
+            }
+            
+            // في بيئة الإنتاج، يجب استخدام bcrypt أو طريقة تشفير آمنة
+            // هنا نستخدم كلمة مرور بسيطة للمثال: admin123
+            const isValidPassword = password === 'admin123';
+            
+            if (isValidPassword) {
+                this.isAdmin = true;
+                this.currentAdminUser = users;
+                localStorage.setItem('marketAdminLoggedIn', 'true');
+                localStorage.setItem('marketAdminUser', JSON.stringify(users));
+                
+                // تحديث آخر وقت تسجيل دخول
+                await supabase
+                    .from('admin_users')
+                    .update({ last_login: new Date().toISOString() })
+                    .eq('id', users.id);
+                
+                this.updateUI();
+                this.hideLoginModal();
+                this.showAlert('تم تسجيل الدخول بنجاح!', 'success');
+                this.handleNavigation('admin');
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+            
         } catch (error) {
-            this.showAlert('خطأ في تحديث كلمة المرور', 'error');
+            console.error('❌ خطأ في تسجيل الدخول:', error);
+            document.getElementById('login-error').style.display = 'block';
         }
     }
 
     handleLogout() {
         this.isAdmin = false;
+        this.currentAdminUser = null;
         localStorage.setItem('marketAdminLoggedIn', 'false');
+        localStorage.removeItem('marketAdminUser');
         this.updateUI();
         this.showAlert('تم تسجيل الخروج بنجاح', 'success');
         this.handleNavigation('home');
@@ -4039,7 +3668,7 @@ class MarketApp {
 // ==================== تهيئة التطبيق ====================
 document.addEventListener('DOMContentLoaded', function() {
     const app = new MarketApp();
-    console.log('🚀 تم تحميل تطبيق ماركتنا مع نظام الدفع المزدوج بنجاح!');
+    console.log('🚀 تم تحميل تطبيق ماركتنا مع Supabase بنجاح!');
 });
     </script>
 </body>
